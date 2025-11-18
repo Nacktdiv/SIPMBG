@@ -7,7 +7,7 @@ function Navbar () {
     console.log(statusMenu)
 
     return (
-        <nav className={`w-full h-[56px] flex bg-[#4E5F71] px-[16px] md:px-[160px] py-[8px] justify-between fixed`}>
+        <nav className={`w-full h-[56px] flex bg-[#4E5F71] px-[16px] md:px-[160px] py-[8px] justify-between fixed z-100`}>
             <img src={logo} alt="logo" className="" />
             <div className={` flex gap-[20px] font-[--font-family-poppins] font-[var(--font-weight-bold)] items-center  `}>
                     <IoMenu className="text-white text-2xl md:hidden" onClick={() => setStatusMenu(!statusMenu)} />
@@ -19,7 +19,6 @@ function Navbar () {
                         </ul>
                         <button className="bg-[#0DC6BF] mt-[20px] md:mt-[0px] px-[4px] py-[4px] block"><p className="text-base ">Masuk Dashboard</p></button>
                     </div>
-                  
             </div>
         </nav>
     )
