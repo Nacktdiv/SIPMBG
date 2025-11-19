@@ -14,6 +14,7 @@ figure,
 hr {
   margin: 0;
   padding: 0;
+  line-height: 1;
 }
 
 /* 3. Aturan Tambahan untuk Daftar (List) */
@@ -180,4 +181,14 @@ textarea {
   --font-weight-medium: 500;
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
+
+  /* Definisikan variabel dengan diawali double dash (--) */
+
+}
+
+@theme {
+  --color-coklat: #D7c097;
+  --color-cream: #e7deaf;
+  --color-hijau-muda: #73af6f;
+  --color-hijau-tua: #007e6e; 
 }

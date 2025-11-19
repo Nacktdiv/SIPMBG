@@ -6,6 +6,8 @@
         grid-template-columns: repeat(4, 1fr);
     }
 
+
+
 @media (width >= 48rem) {
     .grid-container {
     margin: 0px 42px;

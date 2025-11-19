@@ -7,7 +7,7 @@ function Footer() {
     return (
         <footer className="bg-[#4E5F71] h-[414px] md:h-[300px] mt-[20px] flex flex-col items-center">
             <div className="bg-[#0DC6BF] w-1/2 h-3 mt-[16px] rounded-[20px]"></div>
-            <div className="flex px-[42px] mt-[16px]">
+            <div className="flex flex-1 px-[42px] mt-[16px]">
                 <div className="flex-1 flex flex-col items-start gap-[16px] ">
                     <img src={Logo} alt="logo" className="h-[60px]"/>
                     <p className="text-white text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
@@ -26,7 +26,7 @@ function Footer() {
             <div className="w-full flex justify-end items-end py-[16px]">
                     <div className="rounded-[20px] bg-[#0DC6BF] h-[40px] w-1/2"></div>
             </div>
-            <div className="flex-1 bg-[#71604E] w-full flex items-center justify-center">
+            <div className="h-[30x] bg-[#71604E] w-full flex items-center justify-center">
                 <p>COPYRIGHT@2025 SIPMBG</p>
             </div>
         </footer>
