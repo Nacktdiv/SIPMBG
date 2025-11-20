@@ -5,8 +5,7 @@ const connectDB = require('./src/config/db');
 const cors = require('cors');
 
 // IMPORT ROUTES
-const imageRoutes = require('./src/routes/uploadgambar');
-const sppgRoutes = require('./src/routes/sppgRoute');
+
 // END ROUTES
 
 dotenv.config();
@@ -36,9 +35,6 @@ app.get('/', (req, res) => {
 
 app.use('/uploads', express.static('uploads'));
 
-app.use('/api', imageRoutes);
-
-app.use('/api/sppg', sppgRoutes);
 // END
 
 app.listen(PORT, () => {
