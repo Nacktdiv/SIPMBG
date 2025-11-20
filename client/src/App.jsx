@@ -4,8 +4,12 @@ import './App.css'
 import Home from './home.jsx'
 import LacakMbg from './lacakmbg.jsx'
 import Kontak from './kontak.jsx'
+import { supabase } from './api/supabase.js'; // Sesuaikan path
+
+
 
 function App() {
+
 
   return (
     <Routes>

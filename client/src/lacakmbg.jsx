@@ -10,6 +10,9 @@ import {
 } from 'react-icons/fa6';
 import GambarIbu from "./assets/gambar-ibu.png"
 
+//LOGIC IMPORT
+import createGambarDB from "./api/creategambardb";
+
 const DUMMY_DATA = {
   menuScore: 5,
   menuMaxScore: 5,
@@ -23,7 +26,39 @@ const ModalFiturInput = ({}) => {
     )
 }
 
-const ModalFitur = ({onClose}) => {
+const ModalFitur = ({onClose, setfileGambar}) => {
+
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [prevGambar, setprevGambar] = useState(null)
+    const [anonim, setAnonim] = useState(false);
+    const [tampilteks, settampilteks] = useState("");
+    const [asalSekolah, setasalSekolah] = useState("MAN 2 Kota Kediri")
+
+
+    // useRef digunakan untuk mengakses elemen input file secara langsung
+    const fileInputRef = useRef(null);
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+        setPreviewUrl(URL.createObjectURL(file));
+        setprevGambar(file);
+        } else {
+        setPreviewUrl(null);
+        }
+    };
+
+    const handleFileSend = () => {
+        setfileGambar({
+            file: prevGambar,
+            nama: anonim ? "Random User" : tampilteks,
+            asalSekolah: asalSekolah,
+            anonim: anonim
+        });
+
+        onClose();
+    };
+
     return (
         <div 
             className="fixed inset-0 z-50  "
@@ -58,9 +93,12 @@ const ModalFitur = ({onClose}) => {
                                 
                                 <div className="relative">
                                     
-                                    <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                        <option value="jawa_timur" selected>Anonim</option>
-                                        <option value="jawa_barat">Sinonim</option>
+                                    <select id="anonim" 
+                                            value={anonim ? "anonim" : "sinonim"}
+                                            onChange={(e) => setAnonim(e.target.value === "anonim")}
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
+                                        <option value="anonim" selected>anonim</option>
+                                        <option value="sinonim">sinonim</option>
                                     </select>
                                     
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -68,26 +106,29 @@ const ModalFitur = ({onClose}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div id="select-2" className="flex flex-col gap-1">
-                                <div className="flex items-center mb-1 gap-2">
-                                    
-                                    <IoBodyOutline/>
-                                    <label for="provinsi" className="text-accent font-semibold">Nama</label>
-                                </div>
-                                
-                                <div className="relative">
-                                    
-                                    <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                        <option value="jawa_timur" selected>memet</option>
-                                        <option value="jawa_barat">Peli</option>
-                                        <option value="jawa_tengah">Joni</option>
-                                    </select>
-                                    
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            {!anonim && (
+                                <div id="select-2" class="flex flex-col gap-1">
+                                    <div class="flex items-center mb-1 gap-2">
+                                        <span class="text-accent font-semibold">👤</span>
+                                        <label for="nama_input" class="text-accent font-semibold">Nama</label>
                                     </div>
+                                    
+                                    <div class="relative">
+                                        
+                                        <input 
+                                            type="text" 
+                                            id="nama_input" 
+                                            name="nama"
+                                            value={tampilteks}
+                                            onChange={(e) => settampilteks(e.target.value)} 
+                                            placeholder="Masukkan Nama Anda"
+                                            class="bg-cream w-full p-2 pr-4 rounded-xl text-base border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                        />
+                                        
+                                        
+                                        </div>
                                 </div>
-                            </div>
+                            )}
                             <div id="select-3" className="flex flex-col gap-1">
                                 <div className="flex items-center mb-1 gap-2">
                                     
@@ -97,10 +138,14 @@ const ModalFitur = ({onClose}) => {
                                 
                                 <div className="relative">
                                     
-                                    <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                        <option value="jawa_timur" selected>MAN 2 Kota Kediri</option>
-                                        <option value="jawa_barat">Posyandu Burengan</option>
-                                        <option value="jawa_tengah">Ponpes Lirboyo</option>
+                                    <select
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base"
+                                        value={asalSekolah}
+                                        onChange={(e) => setasalSekolah(e.target.value)}
+                                    >
+                                        <option value="MAN 2 Kota Kediri">MAN 2 Kota Kediri</option>
+                                        <option value="Posyandu Burengan">Posyandu Burengan</option>
+                                        <option value="Ponpes Lirboyo">Ponpes Lirboyo</option>
                                     </select>
                                     
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -110,7 +155,7 @@ const ModalFitur = ({onClose}) => {
                             </div>
 
                             <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex self-center"
-                                    onClick={() => setmodalPopup(true)}>
+                                    onClick={handleFileSend}>
                                     <div className="py-4 px-8">
                                         <p className="text-base text-white ">UNGGAH FOTO</p>
                                     </div>
@@ -125,7 +170,55 @@ const ModalFitur = ({onClose}) => {
                             </div>
                         </div>
                         <div className="flex p-5 items-center justify-center bg-hijau-muda-3">
-                            <img src="" alt="" className="h-82 w-115" />
+                            {/* Input file yang sebenarnya, disembunyikan secara visual */}
+                            <input
+                                id="hidden-file-upload" // ID unik untuk input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                ref={fileInputRef} // Kaitkan ref dengan input
+                                className="hidden" // Sembunyikan input secara visual
+                            />
+
+                            {/* Label yang akan berfungsi sebagai area klik untuk upload gambar */}
+                            {/* htmlFor harus sama dengan id dari input file yang tersembunyi */}
+                            <label
+                                htmlFor="hidden-file-upload"
+                                className="relative h-82 w-115 flex items-center justify-center cursor-pointer 
+                                        bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg 
+                                        hover:border-blue-500 hover:bg-gray-50 transition-colors duration-200"
+                            >
+                                {previewUrl ? (
+                                // Jika ada preview, tampilkan gambar
+                                <img
+                                    src={previewUrl}
+                                    alt="Preview Gambar"
+                                    className="h-full w-full object-cover rounded-lg" // Pastikan gambar mengisi area
+                                />
+                                ) : (
+                                // Jika tidak ada preview, tampilkan ikon atau teks placeholder
+                                <div className="text-center">
+                                    <svg
+                                    className="mx-auto h-12 w-12 text-gray-400"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 48 48"
+                                    aria-hidden="true"
+                                    >
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L40 32"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                    </svg>
+                                    <p className="mt-2 text-sm text-gray-600">
+                                    Klik untuk memilih gambar
+                                    </p>
+                                    <p className="text-xs text-gray-500">PNG, JPG, GIF hingga 10MB</p>
+                                </div>
+                                )}
+                            </label>
                         </div>
                     </div>
                 </div>            
@@ -419,6 +512,8 @@ const ValidasiFitur = ({setmodalPopup, modalPopup}) => {
 
     const widthPercentage = 66;
 
+
+
     return (
         <div id="validasi-menu" className="col-span-8 flex flex-col">
             <div className="h-9 flex ">
@@ -486,7 +581,15 @@ const ValidasiFitur = ({setmodalPopup, modalPopup}) => {
 
 function LacakMbg() {
     const [modalPopup, setmodalPopup] = useState(false)
-    
+    const [fileGambar, setfileGambar] = useState(null)
+
+    if (fileGambar) {
+        try {
+            createGambarDB(fileGambar)
+        }catch (e) {
+            console.log("ERROR ADA DISINI:", e)
+        }
+    }
     
     return (
         <div className="bg-cream">
@@ -500,7 +603,7 @@ function LacakMbg() {
                 <ValidasiFitur modalPopup={modalPopup} setmodalPopup={setmodalPopup}/>
             </div>
             <Footer className=''/>
-            {modalPopup && <ModalFitur onClose={() => setmodalPopup(false)} />}
+            {modalPopup && <ModalFitur onClose={() => setmodalPopup(false)} setfileGambar={setfileGambar} />}
         </div>
     );
 }
