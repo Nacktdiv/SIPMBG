@@ -11,24 +11,24 @@ function Home() {
     function ubahWarna(cardNumber) {
         switch (cardNumber) {
             case 1:
-                return "bg-[#4E5F71]";
+                return "bg-hijau-muda-1";
             case 2:
-                return "bg-[#0DC6BF]";
+                return "bg-hijau-muda-2";
             case 3:
-                return "bg-[#BF0D14]";
+                return "bg-hijau-muda-3";
             case 4:
-                return "bg-[#71604E]";
+                return "bg-hijau-muda-4";
             default:
-                return "bg-gray-500"; // Tambahkan default untuk keamanan
+                return "bg-hijau-muda-1"; // Tambahkan default untuk keamanan
         }
     }
     
     // 1. Definisikan data/jumlah cards (Pindah ke scope Home)
     const cardData = [
-        { id: 1, title: "Lorem Ipsum is simply dummy 1" },
-        { id: 2, title: "Lorem Ipsum is simply dummy 2" },
-        { id: 3, title: "Lorem Ipsum is simply dummy 3" },
-        { id: 4, title: "Lorem Ipsum is simply dummy 4" }, // Tambahkan card ke-4
+        { id: 1, title: "Lorem Ipsum is simply " },
+        { id: 2, title: "Lorem Ipsum is simply " },
+        { id: 3, title: "Lorem Ipsum is simply " },
+        { id: 4, title: "Lorem Ipsum is simply " }, // Tambahkan card ke-4
     ];
 
     // 2. Buat Ref untuk elemen yang digeser (Pindah ke scope Home)
@@ -80,40 +80,40 @@ function Home() {
     const desktopCard = (cardId) => (
         <div key={cardId} className="flex flex-col gap-[16px] text-white items-center h-full w-full">
             <div className="flex justify-center items-center overflow-y-hidden overflow-x-hidden 
-                         h-[217px] w-full border-2 border-black rounded-[20px]">
+                         h-[217px] w-full  rounded-[20px]">
                 <img src={Ibu} alt={`Gambar ibu ${cardId}`} className=" object-cover w-full h-full" />
             </div>
             
-            <div className="bg-[#71604E] py-2 px-4 rounded-[20px] max-h-[45px]">
-                <h1 className="text-2xl font-[--font-family-poppins] font-[var(--font-weight-bold)] text-center text-white ">Lorem Ipsum is simply dummy {cardId}</h1>
+            <div className="bg-hijau-muda py-2 px-4 rounded-[20px] max-h-[45px]">
+                <h1 className="text-2xl font-[--font-family-poppins] font-[var(--font-weight-bold)] text-center text-cream ">Lorem Ipsum is simply </h1>
             </div>
 
-            <div className="flex-grow bg-blue-100 w-full min-h-0">
-                <p className="text-base font-[--font-family-poppins] font-[var(--font-weight-regular)] text-center text-black ">
+            <div className="flex-grow w-full min-h-0">
+                <p className="text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]  text-cream ">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quidem veniam, reiciendis magni dicta placeat a molestias repellat ducimus facere tempore dignissimos omnis error quia, ab quam fugiat, velit laboriosam!
                 </p>
             </div>
             
-            <button className="rounded-[20px] w-1/2 p-[8px] bg-[#71604E] "><p>button</p></button>
+            <button className="rounded-[20px] w-1/2 p-[8px] bg-hijau-muda "><p className="text-hijau-tua">button</p></button>
         </div>
     );
 
 
     return (
-        <>
+        <div className="bg-cream">
             <Navbar />
             <div className="pt-14">
-                <main>
+                <main className="">
 
                     <section id="section-1" className="grid-container h-[861px] md:h-[544px] flex flex-col md:flex-row items-center">
                         <div className=" col-span-4 md:col-span-6 order-1 md:order-0 flex flex-col justify-center gap-[24px]">
                             <div className="flex flex-col gap-[16px]">
-                                <h1 className="text-4xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">Solusi Digital Transparan untuk Distribusi & Pengelolaan Makanan Bergizi Gratis</h1>
-                                <p className="text-xl font-[--font-family-poppins] font-[var(--font-weight-regular)]">Dapatkan informasi detail mengenai penerima, jadwal, dan pelaporan setiap alokasi makanan bergizi gratis.</p>
+                                <h1 className="text-coklat text-4xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">Solusi Digital Transparan untuk Distribusi & Pengelolaan Makanan Bergizi Gratis</h1>
+                                <p className="text-coklat text-xl font-[--font-family-poppins] font-[var(--font-weight-regular)]">Dapatkan informasi detail mengenai penerima, jadwal, dan pelaporan setiap alokasi makanan bergizi gratis.</p>
                             </div>
                             <div className="flex justify-center gap-[20px]">
-                                <button className="bg-[#0DC6BF] rounded-[20px] py-2 px-10"><p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-regular)]">Lacak</p></button>
-                                <button className="border-2 border-solid rounded-[20px] p-2"><p className="text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]">Masuk Dashboard</p></button>
+                                <button className="bg-hijau-muda rounded-[20px] py-2 px-10"><p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-regular)]">Lacak</p></button>
+                                <button className="border-hijau-tua border-2 border-solid rounded-[20px] p-2"><p className="text-coklat text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]">Masuk Dashboard</p></button>
                             </div>
                         </div>
                         <div className="col-span-4 md:col-span-6 order-0 md:order-1 h-[380px] flex justify-center items-center">
@@ -123,8 +123,8 @@ function Home() {
 
                     <section id="section-2" className="grid-container h-[861px] md:h-[544px]">
 
-                        <div className="hidden md:block col-span-12 h-[16px] bg-[#0DC6BF] rounded-[20px] mt-[16px]"></div>
-                        <h1 className="hidden md:block col-span-12 justify-self-center text-4xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">Fitur SIPMBG</h1>
+                        <div className="hidden md:block col-span-12 h-[16px] bg-hijau-muda rounded-[20px] mt-[16px]"></div>
+                        <h1 className="hidden md:block col-span-12 justify-self-center text-hijau-tua text-4xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">Fitur SIPMBG</h1>
                         <div className=" hidden md:flex col-span-12 gap-[16px] items-center">
                             <div className=" w-[calc(5/12*100%)]  h-[396px] flex justify-center ">
                                 <img src={Ibu} alt="Gambar ibu" className="max-h-full max-w-full"/>
@@ -133,29 +133,29 @@ function Home() {
                                 <div className="flex relative w-full -mb-1 ">
                                     <button 
                                     onClick={() => setStatusCard(1)}
-                                    className={`${statusCard == 1 ? "z-11" : "z-10"} flex relative h-[50px] flex-1 justify-center items-center bg-[#4E5F71] text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
-                                        <p className="text-sm font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lorem Ipsum entana</p>
+                                    className={`${statusCard == 1 ? "z-11" : "z-10"} flex relative h-[50px] flex-1 justify-center items-center bg-hijau-muda-1 text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
+                                        <p className=" text-sm font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lorem Ipsum entana</p>
                                     </button>
 
                                     <button 
                                     onClick={() => setStatusCard(2)}
-                                    className={`${statusCard == 2 ? "z-11" : "z-9"} flex relative -ml-2 h-[50px] flex-1 justify-center items-center bg-[#0DC6BF] text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
+                                    className={`${statusCard == 2 ? "z-11" : "z-9"} flex relative -ml-2 h-[50px] flex-1 justify-center items-center bg-hijau-muda-2 text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
                                         <p className="text-sm font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lorem Ipsum entana</p>
                                     </button>
 
                                     <button 
                                     onClick={() => setStatusCard(3)}
-                                    className={`flex relative ${statusCard == 3 ? "z-11" : "z-8"} -ml-2 h-[50px] flex-1 justify-center items-center bg-[#BF0D14] text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
+                                    className={`flex relative ${statusCard == 3 ? "z-11" : "z-8"} -ml-2 h-[50px] flex-1 justify-center items-center bg-hijau-muda-3 text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
                                         <p className="text-sm font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lorem Ipsum entana</p>
                                     </button>
 
                                     <button 
                                     onClick={() => setStatusCard(4)}
-                                    className={`flex relative ${statusCard == 4 ? "z-11" : "z-7"} -ml-2 h-[50px] flex-1 justify-center items-center bg-[#71604E] text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
+                                    className={`flex relative ${statusCard == 4 ? "z-11" : "z-7"} -ml-2 h-[50px] flex-1 justify-center items-center bg-hijau-muda-4 text-white px-2 py-2 rounded-t-[20px] transition duration-300`}>
                                         <p className="text-sm font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lorem Ipsum entana</p>
                                     </button>
                                 </div>
-                                <div className={`${ubahWarna(statusCard)} p-[8px] min-h-[296px] z-99`}>
+                                <div className={`${ubahWarna(statusCard)} p-[8px] min-h-[296px] z-99 flex flex-col gap-5`}>
                                     <h1 className="text-2xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">Lorem Ipsum Entana</h1>
                                     <p className="text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                                 </div>
@@ -209,7 +209,7 @@ function Home() {
 
                     <section id="section-3" className="grid-container h-[528px] md:h-[544px] pt-[16px]">
 
-                        <div id="section-3-laptop" className="col-span-12 hidden md:flex gap-[16px] items-center h-full">
+                        <div id="section-3-laptop" className="col-span-12 hidden md:flex gap-[16px] items-center h-full bg-hijau-tua rounded-[20px] p-5">
                             {/* Memanggil komponen Card Desktop yang sudah diperbaiki 4x */}
                             {desktopCard(1)}
                             {desktopCard(2)}
@@ -257,7 +257,7 @@ function Home() {
                 </main>
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

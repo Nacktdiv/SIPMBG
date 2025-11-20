@@ -187,8 +187,23 @@ textarea {
 }
 
 @theme {
-  --color-coklat: #D7c097;
+  --color-coklat: #3A1F04;
   --color-cream: #e7deaf;
+  --color-cream-tua: #d7c097;
   --color-hijau-muda: #73af6f;
-  --color-hijau-tua: #007e6e; 
+  --color-hijau-tua: #007e6e;
+  
+  --color-hijau-tua-1: #007e6e;
+  --color-hijau-tua-2: #00a28f;
+  --color-hijau-tua-3: #00d6c1;
+  --color-hijau-tua-4: #7ff2e7;
+
+  /* Paling Tua (Darken) */
+  --color-hijau-muda-1: #73AF6F; 
+  /* Tua (Slightly Darken) */
+  --color-hijau-muda-2: #60965C;
+  /* Asli/Normal */
+  --color-hijau-muda-3: #5B8B57; 
+  /* Paling Muda (Lighten) */
+  --color-hijau-muda-4: #558952;
 }
