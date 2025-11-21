@@ -1,7 +1,14 @@
 import {useState, useEffect, useRef} from "react";
-import Navbar from "./component/navbar";
-import Footer from "./component/footer";
-import { IoSearch, IoHappy, IoLocationOutline, IoChevronDownOutline, IoAlarmOutline, IoFingerPrintOutline,IoBodyOutline, IoSchoolOutline} from "react-icons/io5"
+
+import { IoSearch, 
+    IoHappy, 
+    IoLocationOutline, 
+    IoChevronDownOutline, 
+    IoAlarmOutline, 
+    IoFingerPrintOutline,
+    IoBodyOutline, 
+    IoSchoolOutline
+} from "react-icons/io5"
 import { 
     FaBowlFood, 
     FaDrumstickBite, 
@@ -10,8 +17,13 @@ import {
 } from 'react-icons/fa6';
 import GambarIbu from "./assets/gambar-ibu.png"
 
+//COMPONENT IMPORT
+import Navbar from "./component/navbar";
+import Footer from "./component/footer";
+
 //LOGIC IMPORT
 import createGambarDB from "./api/creategambardb";
+import getLacakMbg from "./api/getLacakMbg";
 
 const DUMMY_DATA = {
   menuScore: 5,
@@ -19,19 +31,12 @@ const DUMMY_DATA = {
   portionPercentage: 90, // Nilai persentase (0-100)
 };
 
-const ModalFiturInput = ({}) => {
-    return (
-        <>
-        </>
-    )
-}
+const ModalFitur = ({onClose, setFileGambar}) => {
 
-const ModalFitur = ({onClose, setfileGambar}) => {
-
-    const [previewUrl, setPreviewUrl] = useState(null);
-    const [prevGambar, setprevGambar] = useState(null)
-    const [anonim, setAnonim] = useState(false);
-    const [tampilteks, settampilteks] = useState("");
+    const [prevPath, setprevPath] = useState(null);
+    const [prevFile, setprevFile] = useState(null)
+    const [anonim, setanonim] = useState(false);
+    const [namaUser, setnamaUser] = useState("");
     const [asalSekolah, setasalSekolah] = useState("MAN 2 Kota Kediri")
 
 
@@ -41,17 +46,17 @@ const ModalFitur = ({onClose, setfileGambar}) => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-        setPreviewUrl(URL.createObjectURL(file));
-        setprevGambar(file);
+        setprevPath(URL.createObjectURL(file));
+        setprevFile(file);
         } else {
-        setPreviewUrl(null);
+        setprevPath(null);
         }
     };
 
     const handleFileSend = () => {
-        setfileGambar({
-            file: prevGambar,
-            nama: anonim ? "Random User" : tampilteks,
+        setFileGambar({
+            file: prevFile,
+            nama: anonim ? "Random User" : namaUser,
             asalSekolah: asalSekolah,
             anonim: anonim
         });
@@ -88,14 +93,14 @@ const ModalFitur = ({onClose, setfileGambar}) => {
                                 <div className="flex items-center mb-1 gap-2">
                                     
                                     <IoFingerPrintOutline/>
-                                    <label for="provinsi" className="text-accent font-semibold">Privasi</label>
+                                    <label htmlFor="provinsi" className="text-accent font-semibold">Privasi</label>
                                 </div>
                                 
                                 <div className="relative">
                                     
                                     <select id="anonim" 
                                             value={anonim ? "anonim" : "sinonim"}
-                                            onChange={(e) => setAnonim(e.target.value === "anonim")}
+                                            onChange={(e) => setanonim(e.target.value === "anonim")}
                                             className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
                                         <option value="anonim" selected>anonim</option>
                                         <option value="sinonim">sinonim</option>
@@ -107,22 +112,22 @@ const ModalFitur = ({onClose, setfileGambar}) => {
                                 </div>
                             </div>
                             {!anonim && (
-                                <div id="select-2" class="flex flex-col gap-1">
-                                    <div class="flex items-center mb-1 gap-2">
-                                        <span class="text-accent font-semibold">👤</span>
-                                        <label for="nama_input" class="text-accent font-semibold">Nama</label>
+                                <div id="select-2" className="flex flex-col gap-1">
+                                    <div className="flex items-center mb-1 gap-2">
+                                        <span className="text-accent font-semibold">👤</span>
+                                        <label htmlFor="nama_input" className="text-accent font-semibold">Nama</label>
                                     </div>
                                     
-                                    <div class="relative">
+                                    <div className="relative">
                                         
                                         <input 
                                             type="text" 
                                             id="nama_input" 
                                             name="nama"
-                                            value={tampilteks}
-                                            onChange={(e) => settampilteks(e.target.value)} 
+                                            value={namaUser}
+                                            onChange={(e) => setnamaUser(e.target.value)} 
                                             placeholder="Masukkan Nama Anda"
-                                            class="bg-cream w-full p-2 pr-4 rounded-xl text-base border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                            className="bg-cream w-full p-2 pr-4 rounded-xl text-base border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                         />
                                         
                                         
@@ -133,7 +138,7 @@ const ModalFitur = ({onClose, setfileGambar}) => {
                                 <div className="flex items-center mb-1 gap-2">
                                     
                                     <IoSchoolOutline/>
-                                    <label for="provinsi" className="text-accent font-semibold">Sekolah/Pesantren/Posyandu</label>
+                                    <label htmlFor="provinsi" className="text-accent font-semibold">Sekolah/Pesantren/Posyandu</label>
                                 </div>
                                 
                                 <div className="relative">
@@ -180,18 +185,16 @@ const ModalFitur = ({onClose, setfileGambar}) => {
                                 className="hidden" // Sembunyikan input secara visual
                             />
 
-                            {/* Label yang akan berfungsi sebagai area klik untuk upload gambar */}
-                            {/* htmlFor harus sama dengan id dari input file yang tersembunyi */}
                             <label
                                 htmlFor="hidden-file-upload"
                                 className="relative h-82 w-115 flex items-center justify-center cursor-pointer 
                                         bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg 
                                         hover:border-blue-500 hover:bg-gray-50 transition-colors duration-200"
                             >
-                                {previewUrl ? (
+                                {prevPath ? (
                                 // Jika ada preview, tampilkan gambar
                                 <img
-                                    src={previewUrl}
+                                    src={prevPath}
                                     alt="Preview Gambar"
                                     className="h-full w-full object-cover rounded-lg" // Pastikan gambar mengisi area
                                 />
@@ -227,7 +230,36 @@ const ModalFitur = ({onClose, setfileGambar}) => {
     )
 }
 
-const LacakFitur = ({}) => {
+const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi}) => {
+
+    const  handleLacakMenu = async () => {
+        // 1. Ambil nilai dari semua elemen menggunakan ID
+        const provinsi = document.getElementById('select_provinsi').value;
+        const kota = document.getElementById('select_kota').value;
+        const lokasiSppg = document.getElementById('select_lokasi_sppg').value;
+        const penerima = document.getElementById('select_penerima').value;
+        const tanggalDistribusi = document.getElementById('tanggal_distribusi').value;
+
+        // 2. Kumpulkan data dalam satu objek
+        const dataForm = {
+            provinsi: provinsi,
+            kota: kota,
+            lokasiSppg: lokasiSppg,
+            penerima: penerima,
+            tanggalDistribusi: tanggalDistribusi
+        };
+
+        try {
+            setdataValidasi(dataForm)
+            let res = await getLacakMbg(dataForm)
+            console.log("Berhasil", res)
+            setPathGambar(res)
+            setstatusValidasi(true)
+        } catch (e) {
+            console.log("Error ada di", e)
+        }
+    };
+
     return (
         <div id="lacak-sppg" className="col-span-4 flex-col">
             <div className="h-9 flex ">
@@ -249,15 +281,17 @@ const LacakFitur = ({}) => {
                             <div className="flex items-center mb-1">
                                 
                                 <IoLocationOutline/>
-                                <label for="provinsi" className="text-accent font-semibold">Provinsi</label>
+                                <label htmlFor="provinsi" className="text-accent font-semibold">Provinsi</label>
                             </div>
                             
                             <div className="relative">
                                 
-                                <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                    <option value="jawa_timur" selected>Jawa Timur</option>
-                                    <option value="jawa_barat">Jawa Barat</option>
-                                    <option value="jawa_tengah">Jawa Tengah</option>
+                                <select id="select_provinsi" 
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base"
+                                        defaultValue="Jawa Timur">
+                                    <option value="Jawa Timur" >Jawa Timur</option>
+                                    <option value="Jawa Barat">Jawa Barat</option>
+                                    <option value="Jawa Tengah">Jawa Tengah</option>
                                 </select>
                                 
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -270,15 +304,17 @@ const LacakFitur = ({}) => {
                             <div className="flex items-center mb-1">
                                 
                                 <IoLocationOutline/>
-                                <label for="provinsi" className="text-accent font-semibold">Kota/Kabupaten</label>
+                                <label htmlFor="provinsi" className="text-accent font-semibold">Kota/Kabupaten</label>
                             </div>
                             
                             <div className="relative">
                                 
-                                <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                    <option value="jawa_timur" selected>Kota Kediri</option>
-                                    <option value="jawa_barat">Kota Batu</option>
-                                    <option value="jawa_tengah">Kota Kendari</option>
+                                <select id="select_kota" 
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base"
+                                        defaultValue="Kota Kediri">
+                                    <option value="Kota Kediri" >Kota Kediri</option>
+                                    <option value="Kota Batu">Kota Batu</option>
+                                    <option value="Kota Kendari">Kota Kendari</option>
                                 </select>
                                 
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -297,15 +333,17 @@ const LacakFitur = ({}) => {
                             <div className="flex items-center mb-1">
                                 
                                 <IoLocationOutline/>
-                                <label for="provinsi" className="text-accent font-semibold">Lokasi SPPG</label>
+                                <label htmlFor="provinsi" className="text-accent font-semibold">Lokasi SPPG</label>
                             </div>
                             
                             <div className="relative">
                                 
-                                <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                    <option value="jawa_timur" selected>SPPG Burengan</option>
-                                    <option value="jawa_barat">SPPG Banjarmlati</option>
-                                    <option value="jawa_tengah">SPPG Pulosari</option>
+                                <select id="select_lokasi_sppg" 
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base"
+                                        defaultValue="Burengan">
+                                    <option value="Burengan" >Burengan</option>
+                                    <option value="Banjarmlati">Banjarmlati</option>
+                                    <option value="Pulosari">Pulosari</option>
                                 </select>
                                 
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -318,15 +356,17 @@ const LacakFitur = ({}) => {
                             <div className="flex items-center mb-1">
                                 
                                 <IoLocationOutline/>
-                                <label for="provinsi" className="text-accent font-semibold">Sekolah/Pesantren/Posyandu</label>
+                                <label htmlFor="provinsi" className="text-accent font-semibold">Sekolah/Pesantren/Posyandu</label>
                             </div>
                             
                             <div className="relative">
                                 
-                                <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                    <option value="jawa_timur" selected>MAN 2 Kota Kediri</option>
-                                    <option value="jawa_barat">Posyandu Burengan</option>
-                                    <option value="jawa_tengah">Ponpes Lirboyo</option>
+                                <select id="select_penerima" 
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base"
+                                        defaultValue="MAN 2 Kota Kediri">
+                                    <option value="MAN 2 Kota Kediri" >MAN 2 Kota Kediri</option>
+                                    <option value="Posyandu Burengan">Posyandu Burengan</option>
+                                    <option value="Ponpes Lirboyo">Ponpes Lirboyo</option>
                                 </select>
                                 
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -346,24 +386,21 @@ const LacakFitur = ({}) => {
                             <div className="flex items-center mb-1">
                                 
                                 <IoAlarmOutline />
-                                <label for="provinsi" className="text-accent font-semibold">Tanggal Distribus</label>
+                                <label htmlFor="provinsi" className="text-accent font-semibold">Tanggal Distribus</label>
                             </div>
                             
                             <div className="relative">
-                                
-                                <select id="provinsi" className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
-                                    <option value="jawa_timur" selected>Jawa Timur</option>
-                                    <option value="jawa_barat">Jawa Barat</option>
-                                    <option value="jawa_tengah">Jawa Tengah</option>
-                                </select>
-                                
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                                </div>
+                            <input 
+                                id="tanggal_distribusi" 
+                                name="tanggal_distribusi"
+                                type="date" 
+                                className="bg-cream dropdown-style w-full p-2 pr-10 round" 
+                            />
                             </div>
                         </div>
                     </div>
-                    <button className="bg-hijau-tua  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 ">
+                    <button className="bg-hijau-tua  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 "
+                            onClick={handleLacakMenu}>
                         <div className="py-4 px-8">
                             <p className="text-base text-white ">LACAK MENU</p>
                         </div>
@@ -374,7 +411,7 @@ const LacakFitur = ({}) => {
     )
 }
 
-const DetailMenuFitur = ({}) => {
+const DetailMenuFitur = () => {
     return (
         <div id="container-gambar" className=" col-span-8 flex-col ml-4">
             <div className="h-9 flex ">
@@ -430,7 +467,7 @@ const DetailMenuFitur = ({}) => {
     )
 }
 
-const ValidasiFiturItem = ({item}) => {
+const ValidasiFiturItem = ({user, linkGambar}) => {
     const { menuScore, menuMaxScore, portionPercentage } = DUMMY_DATA;
   
     // bar atas
@@ -444,7 +481,7 @@ const ValidasiFiturItem = ({item}) => {
         <div className="flex flex-col snap-start ">
             <div className="h-12 flex justify-between -mb-6 z-1 px-5">
                 <div className=" bg-cream-tua rounded-2xl px-6 py-2 flex items-center">
-                    <p>User{item}</p>
+                    <p>User{user}</p>
                 </div>
                 <div className="rounded-full bg-cream-tua">
                     <IoHappy className="text-[48px]"></IoHappy>
@@ -452,8 +489,9 @@ const ValidasiFiturItem = ({item}) => {
             </div>
             <div className="bg-cream flex flex-col  ">
                 <div className="py-10 px-25  rounded-[20px]">
-                    {/* Sementara */}
-                    <div className="h-50 border-dashed border-2"></div>
+                    <div className="h-50 border-dashed border-2">
+                        <img src={linkGambar} alt="" className="object-fit" />
+                    </div>
                 </div>
                 <div className="flex flex-col -mt-6">
                     <div className="h-9 flex ">
@@ -508,7 +546,7 @@ const ValidasiFiturItem = ({item}) => {
     )
 }
 
-const ValidasiFitur = ({setmodalPopup, modalPopup}) => {
+const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
 
     const widthPercentage = 66;
 
@@ -569,9 +607,17 @@ const ValidasiFitur = ({setmodalPopup, modalPopup}) => {
                 </div>
                 
                 <div className="overflow-y-scroll h-[464px] flex flex-col gap-5 snap-y snap-mandatory scrollbar-hidden">
-                    {ValidasiFiturItem(1)}
-                    {ValidasiFiturItem(1)}
-                    {ValidasiFiturItem(1)}
+                    {Array.isArray(PathGambar) && PathGambar.length > 0 ? (
+                        PathGambar.map((e) => (
+                            <ValidasiFiturItem 
+                                key={e.nama || e.gambar_url}
+                                user={e.nama} 
+                                linkGambar={e.gambar_url} 
+                            />
+                        ))
+                    ) : (
+                        <p>Silahkan Anda Lacak MBG</p> 
+                    )}
                 </div>
             </div>
         </div>
@@ -581,29 +627,46 @@ const ValidasiFitur = ({setmodalPopup, modalPopup}) => {
 
 function LacakMbg() {
     const [modalPopup, setmodalPopup] = useState(false)
-    const [fileGambar, setfileGambar] = useState(null)
+    const [FileGambar, setFileGambar] = useState(null)
+    const [PathGambar, setPathGambar] = useState("")
+    const [dataValidasi, setdataValidasi] = useState(null)
+    const [statusValidasi, setstatusValidasi] = useState(false)
 
-    if (fileGambar) {
+    const handleUploadAndInsert = async () => {
         try {
-            createGambarDB(fileGambar)
-        }catch (e) {
-            console.log("ERROR ADA DISINI:", e)
+            if (FileGambar && statusValidasi) {
+                await createGambarDB(FileGambar);
+                let res = await getLacakMbg(dataValidasi)
+                console.log("Berhasil", res)
+                setPathGambar(res)
+            } else if (FileGambar && statusValidasi === false){
+                await createGambarDB(FileGambar);
+            }
+
+            setFileGambar(null); 
+        } catch (e) {
+            console.error("ERROR handleUploadAndInsert", e);
+            setFileGambar(null); 
         }
-    }
+    };
+
+    useEffect( () => {
+        handleUploadAndInsert()
+    }, [FileGambar]);
     
     return (
         <div className="bg-cream">
             <Navbar />
             <div id="section-1" className="grid-container pt-24 ">
-                <LacakFitur />
+                <LacakFitur setPathGambar={setPathGambar} setdataValidasi={setdataValidasi} setstatusValidasi={setstatusValidasi}/>
                 <DetailMenuFitur />
             </div>
             <div className="h-13"></div>
             <div id="section-2" className="grid-container">
-                <ValidasiFitur modalPopup={modalPopup} setmodalPopup={setmodalPopup}/>
+                <ValidasiFitur modalPopup={modalPopup} setmodalPopup={setmodalPopup} PathGambar={PathGambar} />
             </div>
             <Footer className=''/>
-            {modalPopup && <ModalFitur onClose={() => setmodalPopup(false)} setfileGambar={setfileGambar} />}
+            {modalPopup && <ModalFitur onClose={() => setmodalPopup(false)} setFileGambar={setFileGambar} />}
         </div>
     );
 }

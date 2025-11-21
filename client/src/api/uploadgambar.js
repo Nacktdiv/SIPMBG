@@ -4,7 +4,7 @@ async function uploadGambar(file) {
     const fileName = `${Date.now()}-${file.name}`;
 
     const { data, error } = await supabase.storage
-    .from("sipmbg")        // nama bucket kamu
+    .from("gambar-mbg")        // nama bucket kamu
     .upload(fileName, file);
 
     if (error) {

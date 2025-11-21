@@ -5,7 +5,6 @@ import { IoMenu } from "react-icons/io5"
 
 function Navbar () {
     const [statusMenu, setStatusMenu] = useState(false)
-    console.log(statusMenu)
 
     return (
         <nav className={`w-full h-[56px] flex bg-hijau-tua px-[16px] md:px-[160px] py-[8px] justify-between fixed z-100`}>
