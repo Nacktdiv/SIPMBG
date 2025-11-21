@@ -1,4 +1,4 @@
-import uploadGambar from "./uploadGambar";
+import uploadGambar from "./uploadGambar.js";
 import { supabase } from "./supabase";
 
 async function createGambarDB(obj) {
