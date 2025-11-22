@@ -8,6 +8,7 @@ import ModalFitur from "./component/lacakmbg/modalfitur"
 import ValidasiFitur from "./component/lacakmbg/validasifitur";
 import CommentFitur from "./component/lacakmbg/commentfitur";
 import DetailMenuFitur from "./component/lacakmbg/detailmenufitur"
+import { showSuccesAlert, showErrorAlert } from "./component/sweetalert";
 
 //LOGIC IMPORT
 import createGambarDB from "./api/creategambardb";
@@ -26,10 +27,11 @@ function LacakMbg() {
             if (FileGambar && statusValidasi) {
                 await createGambarDB(FileGambar);
                 let res = await getLacakMbg(dataValidasi)
-                console.log("Berhasil", res)
                 setPathGambar(res)
+                showSuccesAlert("BERHASIL","Gambar Telah Diupload dan data bukti serta perencanaan berhasil diperbarui")
             } else if (FileGambar && statusValidasi === false){
                 await createGambarDB(FileGambar);
+                showSuccesAlert("BERHASIL","Gambar Telah Diupload")
             }
 
             setFileGambar(null); 

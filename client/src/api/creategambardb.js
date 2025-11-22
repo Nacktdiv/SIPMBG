@@ -16,7 +16,8 @@ async function createGambarDB(obj) {
     }
 
     if (!targetData || targetData.length === 0) {
-        console.warn(`[Gagal] Tidak ada Target SPPG yang ditemukan dengan nama_target: ${obj.asalSekolah}`);
+        console.warn(`Tidak ada Target SPPG yang ditemukan dengan nama_target: ${obj.asalSekolah}`);
+        //sweet alert
         return;
     }
 
@@ -25,7 +26,7 @@ async function createGambarDB(obj) {
     //2. upload gambar di storage
     const urlGambar = await uploadGambar(obj.file);
     if (!urlGambar) {
-        console.error("[Gagal] Upload file ke Storage gagal.");
+        console.error("Upload file ke Storage gagal.");
         return;
     } 
 
@@ -52,7 +53,7 @@ async function createGambarDB(obj) {
         console.error("DB Error (Upload Bukti Menu):", error);
         
     } else {
-        // console.log("Data tersimpan:", data);
+        //sweet alert
         console.log("✅ Proses Upload dan Penyimpanan Metadata Selesai.");
     }
 }

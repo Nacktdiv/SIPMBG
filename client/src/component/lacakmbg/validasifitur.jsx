@@ -92,8 +92,6 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
 
     const widthPercentage = 66;
 
-
-
     return (
         <div id="validasi-menu" className="col-span-7 flex flex-col mr-4">
             <div className="h-9 flex ">

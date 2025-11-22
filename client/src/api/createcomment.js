@@ -26,7 +26,6 @@ const updateCommentar = async (komentar, id_menu) => {
 
         // Pastikan data lama adalah Array, jika tidak, inisialisasi sebagai Array kosong
         if (!Array.isArray(currentCommentar)) {
-             // Jika data JSONB lama adalah objek seperti {0:"a", 1:"b"}, kita ubah ke array string
              currentCommentar = Object.values(currentCommentar);
         }
 
@@ -36,9 +35,9 @@ const updateCommentar = async (komentar, id_menu) => {
         // 4. UPDATE DATA BARU KE DATABASE
         const { data: updatedData, error: updateError } = await supabase
             .from('perencanaan_menu')
-            .update({ comment: currentCommentar }) // Mengirim array baru
+            .update({ comment: currentCommentar }) 
             .eq('id_perencanaan_menu', id_menu)
-            .select('comment') // Ambil hasil komentar setelah di-push
+            .select('comment') 
             .single();
 
         if (updateError) {
@@ -46,14 +45,13 @@ const updateCommentar = async (komentar, id_menu) => {
             return null;
         }
 
-        // 5. DAPATKAN HASIL AKHIR (Output JSON Array yang Sudah di-push)
         console.log("Komentar berhasil di-push. Hasil akhir:");
-        console.log(updatedData.comment); 
+        //sweet alert
         
         return updatedData.comment;
 
     } catch (error) {
-        console.error("Terjadi error tak terduga:", error);
+        console.error("Terjadi error tak terduga dalam komentar:", error);
         return null;
     }
 };

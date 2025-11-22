@@ -2,26 +2,26 @@ import updateCommentar from "../../api/createcomment";
 import { useState, useEffect} from "react";
 import { IoThumbsUpOutline, IoThumbsDownOutline, IoAlertCircleOutline, IoPersonOutline } from 'react-icons/io5';
 import { motion } from "framer-motion";
+import { showErrorAlert, showSuccesAlert } from "../sweetalert";
 const CommentFitur = ({perencanaanMenu}) => {
 
     const [Comment, setComment] = useState("");
     const [listComment, setlistComment] = useState([])
 
     useEffect(() => {
-        
         perencanaanMenu && setlistComment(perencanaanMenu.comment)
         console.log(perencanaanMenu)
     }, [perencanaanMenu]);
 
     const handleSubmit = async () => {
         if (!perencanaanMenu){
-            console.log("Silahkan Lacak Menu sesuai tanggal")
+            showErrorAlert("GAGAL", "Anda Belum Lacak MBG Silahkan Lacak Terlebih Dahulu")
             return;
         }
 
         const res = await updateCommentar(Comment, perencanaanMenu.id_perencanaan_menu)
         setlistComment(res)
-        console.log("ini data listComment", listComment)
+        showSuccesAlert("BERHASIL", "Komentar Anda Berhasil Ditambahkan")
     };
 
     const handleComment = (event) => {

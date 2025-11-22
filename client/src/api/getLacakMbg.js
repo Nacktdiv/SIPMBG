@@ -1,11 +1,14 @@
 import { supabase } from "./supabase";
 
 const getLacakMbg = async (criteria) => {
-    // Destructuring object criteria untuk mendapatkan nilai yang diperlukan
     const { lokasiSppg, penerima, tanggalDistribusi } = criteria; 
-    
+
+    if (!lokasiSppg || !penerima || !tanggalDistribusi){
+        console.warn("Salah satu kriteria tidak diinput")
+    }
+
     try {
-        // --- Langkah 1: Cari ID Target SPPG yang sesuai ---
+        //Langkah 1: Cari ID Target SPPG yang sesuai
         const { data: targetData, error: targetError } = await supabase
             .from('target_sppg')
             .select(`id_target_sppg`)
@@ -13,13 +16,14 @@ const getLacakMbg = async (criteria) => {
             .eq('wilayah_target', lokasiSppg)
             .single(); 
 
-        if (targetError && targetError.code !== 'PGRST116') { // PGRST116 = baris tidak ditemukan
+        if (targetError && targetError.code !== 'PGRST116') {
             console.error("Error mencari Target SPPG:", targetError.message);
             return null;
         }
 
         if (!targetData) {
             console.warn("Target SPPG tidak ditemukan untuk kriteria ini.");
+            //sweet alert
             return null;
         }
 
@@ -40,10 +44,9 @@ const getLacakMbg = async (criteria) => {
 
         if (!rencanaData) {
             console.warn("Perencanaan menu SPPG tidak ditemukan untuk kriteria ini.");
+            //sweeet alert
             return null;
         }
-
-        console.log(rencanaData)
         //Langkah 2 END
         
         // --- Langkah 3: Cari URL Gambar di upload_bukti_menu ---
@@ -53,11 +56,15 @@ const getLacakMbg = async (criteria) => {
             .eq('id_target_sppg', idTarget)
             .eq('created_at', tanggalDistribusi)
 
-        console.log(buktiData)
-
         if (buktiError && buktiError.code !== 'PGRST116') {
             console.error("Error mencari Bukti Menu:", buktiError.message);
             return buktiError.message;
+        }
+
+        if (!buktiData) {
+            console.warn("Bukti menu tidak ditemukan untuk kriteria ini.");
+            //sweeet alert
+            return null;
         }
 
         if (buktiData ) {
@@ -67,7 +74,7 @@ const getLacakMbg = async (criteria) => {
         }
         
     } catch (e) {
-        console.error("Terjadi Error Umum dalam fetchBuktiMenuUrl:", e);
+        console.error("Terjadi Error Umum dalam fetch LacakMbg:", e);
         return null;
     }
 };

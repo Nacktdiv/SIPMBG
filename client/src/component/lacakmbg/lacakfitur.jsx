@@ -4,6 +4,7 @@ import { IoSearch,
     IoAlarmOutline, 
 } from "react-icons/io5"
 import { motion } from 'framer-motion';
+import { showErrorAlert, showSuccesAlert } from "../sweetalert";
 
 import getLacakMbg from "../../api/getLacakMbg";
 
@@ -27,16 +28,31 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
         };
 
         try {
-            setdataValidasi(dataForm)
+            setdataValidasi(dataForm) 
             let res = await getLacakMbg(dataForm)
-            console.log("Berhasil", res)
+            if(res == null){
+                setPathGambar(null)
+                setperencanaanMenu(null)
+                setstatusValidasi(false)
+                showErrorAlert("GAGAL", "Semua Data Tidak Ditemukan")
+                return;
+            }
             const resBukti = res[0]
             const resRencana = res[1]
+            if (resRencana === null){
+                showErrorAlert("GAGAL", "Data Perencanaan Menu Tidak Ditemukan")
+                return;
+            } else if (resBukti === null){
+                showErrorAlert("GAGAL", "Data Bukti Menu Tidak Ditemukan Silahkan Upload Foto Untuk Tanggal Ini")
+                return;
+            }
             setPathGambar(resBukti)
             setperencanaanMenu(resRencana)
             setstatusValidasi(true)
+            showSuccesAlert("BERHASIL", "Data Bukti Menu dan Data Perencanaan Menu Ditemukan")
         } catch (e) {
-            console.log("Error ada di", e)
+            console.log("Error Saat Lacak MBG", e)
+            showErrorAlert("ERROR LACAK MBG", e)
         }
     };
 

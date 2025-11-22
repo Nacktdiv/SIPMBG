@@ -14,7 +14,6 @@ const ModalFitur = ({onClose, setFileGambar}) => {
     const [asalSekolah, setasalSekolah] = useState("MAN 2 Kota Kediri")
 
 
-    // useRef digunakan untuk mengakses elemen input file secara langsung
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
@@ -52,8 +51,9 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                 onClick={onClose}
                  // Mencegah klik di sini menutup modal
             >
-                <div className="flex gap-5 "
-                     onClick={(e) => e.stopPropagation()}>
+                <div 
+                    className="flex gap-5 "
+                    onClick={(e) => e.stopPropagation()}>
                     <div className="flex-col">
                         <div className="h-9 flex ">
                             <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-bold)]">
