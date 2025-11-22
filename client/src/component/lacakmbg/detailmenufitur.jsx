@@ -19,18 +19,18 @@ const DetailMenuFitur = ({perencanaanMenu}) => {
     }
 
     return (
-        <div id="container-gambar" className=" col-span-8 flex-col ml-4">
+        <div id="container-gambar" className=" col-span-4 md:col-span-8 flex-col md:ml-4">
             <div className="h-9 flex shadow-2xl">
                 <div className="text-cream bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                     <p>Menu MBG Hari Ini</p>
                 </div>
             </div>
             <motion.div 
-                className="bg-hijau-muda-3 flex flex-col  gap-[20px] p-5 relative shadow-2xl rounded-tr-[20px] rounded-b-[20px]"
+                className=" bg-hijau-muda-3 flex flex-col  gap-[20px] p-5 relative shadow-2xl rounded-tr-[20px] rounded-b-[20px]"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}>
-                <div className="h-[572px] ">
+                <div className="md:h-[572px] ">
                     {/* <img
                         src={urlgambar}
                         alt="Deskripsi Gambar"
@@ -39,12 +39,13 @@ const DetailMenuFitur = ({perencanaanMenu}) => {
                     <ImageLoader 
                         src={urlgambar} 
                         alt="Menu Utama Harian" 
-                        className="w-full h-full rounded-lg " 
+                        className="md:w-full md:h-full rounded-lg " 
                     />
                 </div>
                 {/* Ojo di utak utik iki code seng angel tur jelimet*/}
-                <div className="flex gap-2 items-stretch absolute -left-0 top-full -translate-y-1/2 w-full font-[--font-family-poppins] font-[var(--font-weight-semibold)] ">
-                    <div className="flex flex-1 flex-col min-w-0 transition duration-300 hover:scale-115 ">
+                <div className='overflow-x-auto md:overflow-x-visible'>
+                    <div className="flex w-fit gap-2 items-stretch md:absolute -left-0 top-full md:-translate-y-1/2 md:w-full font-[--font-family-poppins] font-[var(--font-weight-semibold)] ">
+                    <div className="flex flex-1 flex-col min-w-0 transition duration-300 hover:scale-115 w-60 md:w-auto">
                         <div className="text-coklat rounded-full w-10 h-10 bg-cream-tua flex items-center justify-center z-1 shadow-md"><FaBowlFood className="text-xl"/></div>
                         <div className="text-coklat bg-cream-tua -mt-5 ml-5 pt-5 pb-2 flex flex-col items-center gap-2 shadow-md">
                             <p className="text-base overflow-auto whitespace-nowrap w-full text-center overflow-hidden">Karbohidrat</p>
@@ -85,6 +86,8 @@ const DetailMenuFitur = ({perencanaanMenu}) => {
                         </div>
                     </div>
                 </div>
+                </div>
+                
             </motion.div>
         </div>
     )

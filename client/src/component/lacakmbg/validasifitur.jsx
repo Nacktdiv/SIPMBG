@@ -20,7 +20,7 @@ const ValidasiFiturItem = ({user, linkGambar}) => {
     
 
     return (
-        <div className="flex flex-col snap-start mb-20 ">
+        <div className="flex flex-col snap-start md:mb-20 ">
             <div className="h-12 flex justify-between -mb-6 z-1 px-5">
                 <div className=" bg-cream-tua rounded-2xl px-6 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
                     <p>{user}</p>
@@ -30,8 +30,8 @@ const ValidasiFiturItem = ({user, linkGambar}) => {
                 </div>
             </div>
             <div className="bg-cream flex flex-col  ">
-                <div className="py-10 px-25  rounded-[20px]">
-                    <div className="h-75 border-dashed border-2">
+                <div className="py-7 px-7 md:py-10 md:x-25  rounded-[20px]">
+                    <div className="md:h-75 border-dashed border-2">
                         <img src={linkGambar} alt="" className="object-fit h-full w-full" />
                     </div>
                 </div>
@@ -93,7 +93,7 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
     const widthPercentage = 66;
 
     return (
-        <div id="validasi-menu" className="col-span-7 flex flex-col mr-4">
+        <div id="validasi-menu" className="col-span-4 md:col-span-7  flex flex-col md:mr-4">
             <div className="h-9 flex ">
                 <div className="text-cream bg-hijau-tua rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                     <p>Validasi Menu</p>
@@ -155,7 +155,7 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                     </button>
                 </div>
                 
-                <div className="overflow-y-scroll h-[564px] flex flex-col gap-5 snap-y snap-mandatory scrollbar-hidden">
+                <div className="overflow-y-scroll h-105 md:h-[564px] flex flex-col gap-5 snap-y snap-mandatory scrollbar-hidden">
                     {Array.isArray(PathGambar) && PathGambar.length > 0 ? (
                         PathGambar.map((e) => (
                             <ValidasiFiturItem 

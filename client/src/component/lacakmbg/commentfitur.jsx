@@ -36,7 +36,7 @@ const CommentFitur = ({perencanaanMenu}) => {
 
 
     return (
-        <div id="lacak-sppg" className="col-span-5 flex-col">
+        <div id="lacak-sppg" className="col-span-4 md:col-span-5 flex-col">
             
             {/* HEADER */}
             <div className="h-9 flex">

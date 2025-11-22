@@ -57,7 +57,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
     };
 
     return (
-        <div id="lacak-sppg" className="col-span-4 flex-col">
+        <div id="lacak-sppg" className="col-span-4 mb-10 md:mb-0 md:col-span-4 flex-col">
             <div className="h-9 flex  ">
                 <div className="text-cream bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)] shadow-md">
                     <p>Lacak Menu</p>

@@ -49,11 +49,11 @@ function LacakMbg() {
     return (
         <div className="bg-cream">
             <Navbar />
-            <div id="section-1" className="grid-container pt-24 ">
+            <div id="section-1" className="grid-container pt-24">
                 <LacakFitur setPathGambar={setPathGambar} setdataValidasi={setdataValidasi} setstatusValidasi={setstatusValidasi} setperencanaanMenu={setperencanaanMenu}/>
                 <DetailMenuFitur perencanaanMenu={perencanaanMenu} />
             </div>
-            <div className="h-25"></div>
+            <div className="md:h-25 h-10"></div>
             <div id="section-2" className="grid-container">
                 <ValidasiFitur modalPopup={modalPopup} setmodalPopup={setmodalPopup} PathGambar={PathGambar} />
                 <CommentFitur perencanaanMenu={perencanaanMenu} />

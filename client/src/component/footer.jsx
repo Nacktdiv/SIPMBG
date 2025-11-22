@@ -25,8 +25,8 @@ function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="hidden md:flex w-full  justify-end items-end py-[16px]">
-                    <div className="rounded-[20px] bg-hijau-muda h-[40px] w-1/2 flex items-center justify-center gap-5 font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
+            <div className="flex w-full h-full md:h-auto justify-center md:justify-end md:items-end py-[16px]">
+                    <div className="rounded-[20px] bg-hijau-muda md:h-[40px] w-[calc(100%-40px)] md:w-1/2 flex flex-col md:flex-row items-center md:justify-center justify-between py-2 md:py-0 md:gap-5 font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
                         <IoLogoInstagram className="text-4xl text-coklat"/>
                         <p className="text-xl text-coklat ">@hanyaseorangarya</p>
                         <IoLogoWhatsapp className="text-4xl text-coklat"/>
