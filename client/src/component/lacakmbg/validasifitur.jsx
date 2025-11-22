@@ -1,4 +1,5 @@
 import { IoSearch, IoHappy } from "react-icons/io5"
+import jatuhFoto from "../../assets/jatuhfoto.png"
 
 const DUMMY_DATA = {
   menuScore: 5,
@@ -133,7 +134,12 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                 </div>
                 <div className="flex flex-col p-5 bg-cream rounded-[20px] relative mb-6 ">
                     <div className="border-hijau-tua border-2 border-dashed mb-1">
-                        <div className="h-50 "></div>
+                        <div className="h-50 ">
+                            <img    src={jatuhFoto} 
+                                    alt="" 
+                                    className="h-full w-full object-fit" 
+                                    onClick={() => setmodalPopup(true)} />
+                        </div>
                         
                     </div>
                     <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 "

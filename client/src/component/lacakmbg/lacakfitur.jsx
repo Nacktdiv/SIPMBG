@@ -6,7 +6,7 @@ import { IoSearch,
 
 import getLacakMbg from "../../api/getLacakMbg";
 
-const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi}) => {
+const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperencanaanMenu}) => {
 
     const  handleLacakMenu = async () => {
         // 1. Ambil nilai dari semua elemen menggunakan ID
@@ -29,7 +29,10 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi}) => {
             setdataValidasi(dataForm)
             let res = await getLacakMbg(dataForm)
             console.log("Berhasil", res)
-            setPathGambar(res)
+            const resBukti = res[0]
+            const resRencana = res[1]
+            setPathGambar(resBukti)
+            setperencanaanMenu(resRencana)
             setstatusValidasi(true)
         } catch (e) {
             console.log("Error ada di", e)

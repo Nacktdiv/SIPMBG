@@ -23,10 +23,30 @@ const getLacakMbg = async (criteria) => {
             return null;
         }
 
-
         const idTarget = targetData.id_target_sppg;
+        // Langkah 1 END
+
+        // Langkah 2: Mencari Data Gambar Perencanaan Menu yang sesuai
+        const { data: rencanaData, error: rencanaError } = await supabase
+            .from('perencanaan_menu')
+            .select('id_perencanaan_menu, gambar_url, data_menu, comment')
+            .eq('created_at', tanggalDistribusi)
+            .single(); 
+
+        if (rencanaError && rencanaError.code !== 'PGRST116') { // PGRST116 = baris tidak ditemukan
+            console.error("Error mencari perencanaan menu SPPG:", targetError.message);
+            return null;
+        }
+
+        if (!rencanaData) {
+            console.warn("Perencanaan menu SPPG tidak ditemukan untuk kriteria ini.");
+            return null;
+        }
+
+        console.log(rencanaData)
+        //Langkah 2 END
         
-        // --- Langkah 2: Cari URL Gambar di upload_bukti_menu ---
+        // --- Langkah 3: Cari URL Gambar di upload_bukti_menu ---
         const { data: buktiData, error: buktiError } = await supabase
             .from('upload_bukti_menu')
             .select('gambar_url, nama')
@@ -41,7 +61,7 @@ const getLacakMbg = async (criteria) => {
         }
 
         if (buktiData ) {
-            return buktiData;
+            return [buktiData, rencanaData];
         } else {
             return null;
         }
