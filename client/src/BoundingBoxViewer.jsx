@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 /** generate deterministic color for a string (class name) */
 function colorFromString(str) {
@@ -28,11 +28,22 @@ export default function BoundingBoxViewer({
   imageUrl,          // optional: direct url (if using local path / transformed link)
   predictions = [],  // array from Roboflow
   todayMenu = [],    // array of required menu items
-  completenessPercent // optional precomputed percent
+  completenessPercent, // optional precomputed percent
+  onCanvasReady   
 }) {
   const canvasRef = useRef(null);
+  const [objectUrl, setObjectUrl] = useState(null); 
 
   useEffect(() => {
+    
+    let imgUrl = imageUrl;
+
+    if (imageFile) {
+      const url = URL.createObjectURL(imageFile);
+      setObjectUrl(url);
+      imgUrl = url;
+    }
+
     if (!imageFile && !imageUrl) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -89,7 +100,7 @@ export default function BoundingBoxViewer({
         ctx.font = "16px Inter, Arial";
         const textWidth = ctx.measureText(labelText).width;
         const bgLeft = left;
-        const bgTop = Math.max(16, top - 10);
+        const bgTop = Math.max(16, top);
         const bgW = textWidth + padding * 2;
         const bgH = 22;
         ctx.fillRect(bgLeft - 1, bgTop - bgH + 6, bgW + 2, bgH);
@@ -97,30 +108,40 @@ export default function BoundingBoxViewer({
         // draw label text
         ctx.globalAlpha = 1;
         ctx.fillStyle = "#fff";
-        ctx.fillText(labelText, bgLeft + padding, bgTop + 12);
+        ctx.fillText(labelText, bgLeft + padding, bgTop);
 
         // draw completeness percent next to box (right side)
-        const compText = `${completeness}% overall`;
-        ctx.font = "14px Inter, Arial";
-        ctx.fillStyle = "#000";
-        // small white pill background
-        const pillW = ctx.measureText(compText).width + 12;
-        const pillH = 20;
-        const pillX = left + width + 6; // right of box
-        const pillY = top + 18;
-        ctx.fillStyle = "rgba(255,255,255,0.9)";
-        ctx.fillRect(pillX - 1, pillY - pillH + 4, pillW + 2, pillH);
-        ctx.fillStyle = "#111";
-        ctx.fillText(compText, pillX + 6, pillY);
+        // const compText = `${completeness}%`;
+        // ctx.font = "14px Inter, Arial";
+        // ctx.fillStyle = "#000";
+        // // small white pill background
+        // const pillW = ctx.measureText(compText).width + 12;
+        // const pillH = 20;
+        // const pillX = left + width - 43; // right of box
+        // const pillY = top + 18;
+        // ctx.fillStyle = "rgba(255,255,255,0.9)";
+        // ctx.fillRect(pillX - 1, pillY - pillH + 4, pillW + 2, pillH);
+        // ctx.fillStyle = "#111";
+        // ctx.fillText(compText, pillX + 6, pillY);
 
       });
 
       // done
+
+      canvas.toBlob((blob) => {
+        if (onCanvasReady && blob) {
+          onCanvasReady(blob);  // ⬅️ kirim blob ke parent
+        }
+      }, "image/png");
     };
+
 
     return () => {
       // revoke object url if used
-      if (imageFile) URL.revokeObjectURL(img.src);
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+        setObjectUrl(null);
+      }
     };
   }, [imageFile, imageUrl, predictions, todayMenu, completenessPercent]);
 

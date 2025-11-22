@@ -4,31 +4,98 @@ import { IoSearch,
 } from "react-icons/io5"
 
 import {useState, useRef} from "react";
+import BoundingBoxViewer from "../../BoundingBoxViewer";
+// import { todayMenu } from "../../TestAi";
+
+const ROBOFLOW_API = "https://detect.roboflow.com/sipmbg-v0-2-qnp6z/1?api_key=nSr7FZr0hImd0pJrOJE9";
+
+const todayMenu = ["Nasi", "Ayam Goreng", "Tumis Sayur", "Tahu", "Anggur", "Susu UHT"];
+
+const toBase64Raw = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = String(reader.result).split(",")[1];
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
 
 const ModalFitur = ({onClose, setFileGambar}) => {
 
+    // States
     const [prevPath, setprevPath] = useState(null);
     const [prevFile, setprevFile] = useState(null)
     const [anonim, setanonim] = useState(false);
     const [namaUser, setnamaUser] = useState("");
     const [asalSekolah, setasalSekolah] = useState("MAN 2 Kota Kediri")
 
+    const [imageAiFile, setImageAiFile] = useState(null);      // File object from input
+    const [imageAiUrl, setImageAiUrl] = useState(null);        // optional url (like sandbox path)
+    const [predictions, setPredictions] = useState(null);
+    // const [saving, setSaving] = useState(false);
+
 
     const fileInputRef = useRef(null);
 
-    const handleFileChange = (event) => {
+    // Ai Inference
+    async function runInference(file) {
+        try {
+            // ubah ke base64 tanpa prefix
+            const base64 = await toBase64Raw(file);
+
+            const res = await fetch(ROBOFLOW_API, {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: base64,
+            });
+
+            if (!res.ok) {
+            const txt = await res.text();
+            throw new Error(`Roboflow error: ${res.status} ${txt}`);
+            }
+
+            const json = await res.json();
+
+            console.log("RESULT:", json);
+            
+            // simpan prediction ke state
+            setPredictions(json.predictions || []);
+
+        } catch (err) {
+            console.error("Inference failed:", err);
+            alert("Inference failed: " + err.message);
+        }
+    }
+
+    // File change
+    const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
             setprevPath(URL.createObjectURL(file));
             setprevFile(file);
+            await runInference(file);
         } else {
             setprevPath(null);
         }
     };
 
+    //Compute Menu
+    function computeCompleteness(preds, menuList) {
+        const detected = (preds || []).map(p => String(p.class).toLowerCase());
+        const found = menuList.filter(m => detected.includes(String(m).toLowerCase()));
+        const missing = menuList.filter(m => !detected.includes(String(m).toLowerCase()));
+        const percent = Math.round((found.length / Math.max(1, menuList.length)) * 100);
+        return { found, missing, percent };
+    }
+
     const handleFileSend = () => {
         setFileGambar({
-            file: prevFile,
+            file: imageAiFile,
             nama: anonim ? "Anonim" : namaUser,
             asalSekolah: asalSekolah,
             anonim: anonim
@@ -38,12 +105,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
     };
 
     return (
-        <div 
-            className="fixed inset-0 z-50  "
-            onClick={onClose} 
-            id="modal-backdrop"
-            >
-    
+        <div className="fixed inset-0 z-50  "onClick={onClose} id="modal-backdrop">
             <div className="absolute inset-0 bg-black/30 backdrop-blur-sm w-full"></div>
 
             <div 
@@ -72,13 +134,16 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 
                                 <div className="relative">
                                     
-                                    <select id="anonim" 
-                                            value={anonim ? "anonim" : "sinonim"}
-                                            onChange={(e) => setanonim(e.target.value === "anonim")}
-                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]">
-                                        <option value="anonim" selected>anonim</option>
-                                        <option value="sinonim">sinonim</option>
+                                    <select
+                                        id="anonim"
+                                        value={anonim ? "anonim" : "sinonim"}
+                                        onChange={(e) => setanonim(e.target.value === "anonim")}
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
+                                    >
+                                        <option defaultValue="anonim">anonim</option>
+                                        <option value="sinonim">publik</option>
                                     </select>
+
                                     
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -133,6 +198,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 </div>
                             </div>
 
+                            {/* button */}
                             <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex self-center"
                                     onClick={handleFileSend}>
                                     <div className="py-4 px-8">
@@ -148,6 +214,8 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 <p>Preview</p>
                             </div>
                         </div>
+
+                        {/* panel 2 */}
                         <div className="flex p-5 items-center justify-center bg-hijau-muda-3">
                             {/* Input file yang sebenarnya, disembunyikan secara visual */}
                             <input
@@ -190,12 +258,57 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                     />
                                     </svg>
                                     <p className="mt-2 text-sm text-gray-600">
-                                    Klik untuk memilih gambar
+                                        Klik untuk memilih gambar
                                     </p>
                                     <p className="text-xs text-gray-500">PNG, JPG, GIF hingga 10MB</p>
                                 </div>
                                 )}
                             </label>
+                        </div>
+                    </div>
+                    <div className="flex flex-col">
+                        <div className="h-9 flex ">
+                            <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-bold)]">
+                                <p>Validasi AI</p>
+                            </div>
+                        </div>
+                        {/* <div>
+                            {predictions ? (
+                            <>
+                                <h4>Predictions ({predictions.length})</h4>
+                                <pre style={{ maxHeight: 200, overflow: "auto", background: "#f6f6f6", padding: 8 }}>
+                                {JSON.stringify(predictions, null, 2)}
+                                </pre>
+                            </>
+                            ) : <p>No prediction yet</p>}
+                        </div> */}
+
+                        <div>
+                            <BoundingBoxViewer
+                            imageFile={prevFile}
+                            imageUrl={imageAiUrl}
+                            predictions={predictions || []}
+                            todayMenu={todayMenu}
+                             onCanvasReady={(blob) => {
+                                setImageAiFile(blob);
+                                setImageAiUrl(URL.createObjectURL(blob));
+                            }}
+                            />
+                        </div>
+
+                        <div>
+                            {predictions && (
+                            (() => {
+                                const { found, missing, percent } = computeCompleteness(predictions, todayMenu);
+                                return (
+                                <>
+                                    <h3>Hasil Kelengkapan: {found.length}/{todayMenu.length} ({percent}%)</h3>
+                                    <div><strong>Ditemukan:</strong> {found.join(", ") || "—"}</div>
+                                    <div><strong>Missing:</strong> {missing.join(", ") || "—"}</div>
+                                </>
+                                );
+                            })()
+                            )}
                         </div>
                     </div>
                 </div>            

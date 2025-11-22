@@ -11,7 +11,7 @@ const LOCAL_TEST_FILE_PATH = "https://rvtdvbdwzalkqinrfguc.supabase.co/storage/v
 const ROBOFLOW_API = "https://detect.roboflow.com/sipmbg-v0-2-qnp6z/1?api_key=nSr7FZr0hImd0pJrOJE9";
 
 /** today's menu (example) */
-const todayMenu = ["Nasi", "Ayam Goreng", "Tumis Sayur", "Tahu", "Anggur", "Susu UHT"];
+export const todayMenu = ["Nasi", "Ayam Goreng", "Tumis Sayur", "Tahu", "Anggur", "Susu UHT"];
 
 export default function TestAi() {
   const [imageFile, setImageFile] = useState(null);      // File object from input

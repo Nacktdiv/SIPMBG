@@ -186,9 +186,10 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                 
                 <div className="overflow-y-scroll h-105 md:h-[564px] flex flex-col gap-5 snap-y snap-mandatory scrollbar-hidden">
                     {Array.isArray(PathGambar) && PathGambar.length > 0 ? (
-                        PathGambar.map((e) => (
+                        PathGambar.map((e, i) => (
                             <ValidasiFiturItem 
-                                key={e.nama || e.gambar_url}
+                                // key={e.nama || e.gambar_url}
+                                key={`${e.nama || "user"}-${i}`}
                                 user={e.nama} 
                                 linkGambar={e.gambar_url} 
                             />
