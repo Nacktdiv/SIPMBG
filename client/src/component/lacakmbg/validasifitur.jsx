@@ -142,7 +142,7 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                         </div>
                         
                     </div>
-                    <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 "
+                    <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-hijau-muda-3"
                             onClick={() => setmodalPopup(true)}>
                             <div className="py-4 px-8">
                                 <p className="text-base text-white  font-[--font-family-poppins] font-[var(--font-weight-bold)]">UNGGAH FOTO</p>

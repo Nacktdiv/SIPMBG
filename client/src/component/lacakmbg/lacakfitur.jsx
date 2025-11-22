@@ -3,6 +3,7 @@ import { IoSearch,
     IoChevronDownOutline, 
     IoAlarmOutline, 
 } from "react-icons/io5"
+import { motion } from 'framer-motion';
 
 import getLacakMbg from "../../api/getLacakMbg";
 
@@ -41,7 +42,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
 
     return (
         <div id="lacak-sppg" className="col-span-4 flex-col">
-            <div className="h-9 flex ">
+            <div className="h-9 flex shadow-md ">
                 <div className="text-cream bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                     <p>Lacak Menu</p>
                 </div>
@@ -49,8 +50,17 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                     <p className="">Lacak Anggaran</p>
                 </div> */}
             </div>
-            <div className="bg-hijau-muda-3 flex flex-col gap-[20px] p-5  relative">
-                    <div id="lokasi" className="bg-cream-tua w-full max-w-sm rounded-xl shadow-2xl flex flex-col gap-4 p-2">
+            <motion.div 
+            // 1. Kondisi Awal
+            initial={{ opacity: 0, y: 30 }}
+            
+            // 2. Kondisi Akhir (Saat dimuat)
+            animate={{ opacity: 1, y: 0 }}
+            
+            // 3. Durasi dan Kurva
+            transition={{ duration: 1.5, ease: "easeIn" }}
+            className="bg-hijau-muda-3 flex flex-col gap-[20px] p-5  relative shadow-md rounded-b-[20px] ">
+                    <div id="lokasi" className="z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg ">
                     
                         <h1 className="text-2xl font-bold text-center mb-6 font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                             Lokasi Dapur SPPG
@@ -102,7 +112,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                             </div>
                         </div>
                     </div>
-                    <div id="penerima" className="bg-cream-tua w-full max-w-sm rounded-xl shadow-2xl flex flex-col gap-4 p-2">
+                    <div id="penerima" className=" z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
                     
                         <h1 className="text-2xl font-bold text-center mb-6 text-accent">
                             Lokasi Penerima MBG
@@ -155,7 +165,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                         </div>
                     </div>
 
-                    <div id="waktu" className="bg-cream-tua w-full max-w-sm rounded-xl shadow-2xl flex flex-col gap-4 p-2 mb-8">
+                    <div id="waktu" className=" z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 mb-8 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
                     
                         <h1 className="text-2xl font-bold text-center mb-6 text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
                             Waktu Distribusi MBG
@@ -178,14 +188,14 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                             </div>
                         </div>
                     </div>
-                    <button className="bg-hijau-tua  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 "
+                    <button className="bg-hijau-tua  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 shadow-md transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-hijau-tua-2"
                             onClick={handleLacakMenu}>
                         <div className="py-4 px-8 ">
                             <p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-bold)] w-full ">LACAK MENU</p>
                         </div>
                         <IoSearch className=" text-4xl m-auto text-white"></IoSearch>
                     </button>
-            </div>
+            </motion.div>
         </div>
     )
 }

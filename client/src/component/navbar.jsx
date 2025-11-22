@@ -15,8 +15,8 @@ function Navbar () {
                         <ul className={`text-cream text-base flex ${statusMenu ? 'flex-col w-full' : 'flex-row '} items-center judtify-center gap-[20px] `}>
                             <li><Link to="/home">Beranda</Link></li>
                             <li><Link to="/lacakmbg">Lacak MBG</Link></li>
-                            <li><Link to="/kontak">Kontak</Link></li>
-                            <li><Link to="/testai">Test Inference</Link></li>
+                            {/* <li><Link to="/kontak">Kontak</Link></li>
+                            <li><Link to="/testai">Test Inference</Link></li> */}
                         </ul>
                         <button className="bg-hijau-muda mt-[20px] md:mt-[0px] h-full rounded-[20px] px-4 block"><p className="text-base text-cream ">Masuk Dashboard</p></button>
                     </div>
