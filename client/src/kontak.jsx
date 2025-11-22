@@ -17,10 +17,10 @@ const SPPGForm = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-        setprevPath(URL.createObjectURL(file));
-        setprevFile(file);
+            setprevPath(URL.createObjectURL(file));
+            setprevFile(file);
         } else {
-        setprevPath(null);
+            setprevPath(null);
         }
     };
 
