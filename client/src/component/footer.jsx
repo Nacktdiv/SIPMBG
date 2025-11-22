@@ -25,14 +25,15 @@ function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="flex w-full h-full md:h-auto justify-center md:justify-end md:items-end py-[16px]">
-                    <div className="rounded-[20px] bg-hijau-muda md:h-[40px] w-[calc(100%-40px)] md:w-1/2 flex flex-col md:flex-row items-center md:justify-center justify-between py-2 md:py-0 md:gap-5 font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
-                        <IoLogoInstagram className="text-4xl text-coklat"/>
+            <div className="flex w-full h-full md:h-auto justify-start md:justify-end md:items-end py-[16px] px-5 md:px-0">
+                    <div className=" rounded-[20px] bg-hijau-muda md:h-[40px] w-fit md:w-1/2 flex flex-col md:flex-row md:items-center md:justify-center items-start justify-between px-5 py-4 md:px-0 md:py-0 md:gap-5 font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
+                        <IoLogoInstagram className="text-2xl md:text-4xl text-coklat"/>
                         <p className="text-xl text-coklat ">@hanyaseorangarya</p>
-                        <IoLogoWhatsapp className="text-4xl text-coklat"/>
+                        <IoLogoWhatsapp className="text-2xl md:text-4xl text-coklat"/>
                         <p className="text-xl text-coklat">081548272241</p>
                     </div>
             </div>
+
             <div className="h-[30x] bg-hijau-muda w-full flex items-center justify-center">
                 <p>COPYRIGHT@2025 SIPMBG</p>
             </div>
