@@ -28,6 +28,9 @@ const SkeletonImage = ({ containerClasses, iconClasses }) => {
       {/* Efek shimmer menggunakan animate-pulse Tailwind */}
       <div className="animate-pulse flex h-full items-center justify-center bg-gray-200">
         <PlaceholderIcon className={iconClasses} />
+        <p className="mt-2 text-sm text-gray-600">
+          <pre> Silakan Pilih Lokasi dan Waktu untuk Melihat Menu Hari Ini</pre>
+        </p>
       </div>
     </div>
   );

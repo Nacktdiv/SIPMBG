@@ -89,9 +89,10 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                                 <select id="select_provinsi" 
                                         className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
                                         defaultValue="Jawa Timur">
+                                    <option value="Jawa Timur" >- Pilih Provinsi -</option>
                                     <option value="Jawa Timur" >Jawa Timur</option>
-                                    <option value="Jawa Barat">Jawa Barat</option>
-                                    <option value="Jawa Tengah">Jawa Tengah</option>
+                                    {/* <option value="Jawa Barat">Jawa Barat</option>
+                                    <option value="Jawa Tengah">Jawa Tengah</option> */}
                                 </select>
                                 
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -112,9 +113,10 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                                 <select id="select_kota" 
                                         className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
                                         defaultValue="Kota Kediri">
+                                    <option value="Kota Kediri" >- Pilih Kota -</option>
                                     <option value="Kota Kediri" >Kota Kediri</option>
-                                    <option value="Kota Batu">Kota Batu</option>
-                                    <option value="Kota Kendari">Kota Kendari</option>
+                                    <option value="Kota Batu">Kota Malang</option>
+                                    <option value="Kota Kendari">Kota Surabaya</option>
                                 </select>
                                 
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -141,6 +143,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                                 <select id="select_lokasi_sppg" 
                                         className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)] text-base"
                                         defaultValue="Burengan">
+                                    <option value="Burengan" >- Pilih Lokasi SPPG -</option>
                                     <option value="Burengan" >Burengan</option>
                                     <option value="Banjarmlati">Banjarmlati</option>
                                     <option value="Pulosari">Pulosari</option>
@@ -164,6 +167,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                                 <select id="select_penerima" 
                                         className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)] text-base"
                                         defaultValue="MAN 2 Kota Kediri">
+                                    <option value="MAN 2 Kota Kediri" >- Pilih Nama Sekolah -</option>
                                     <option value="MAN 2 Kota Kediri" >MAN 2 Kota Kediri</option>
                                     <option value="Posyandu Burengan">Posyandu Burengan</option>
                                     <option value="Ponpes Lirboyo">Ponpes Lirboyo</option>
