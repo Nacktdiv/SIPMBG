@@ -7,7 +7,7 @@ function Navbar () {
     const [statusMenu, setStatusMenu] = useState(false)
 
     return (
-        <nav className={`w-full h-[56px] flex bg-hijau-tua px-[16px] md:px-[160px] py-[8px] justify-between fixed z-100`}>
+        <nav className={`w-full h-[56px] flex bg-hijau-tua px-[16px] md:px-[160px] py-[8px] justify-between fixed z-100 rounded-b-[20px]`}>
             <img src={logo} alt="logo" className="" />
             <div className={` flex gap-[20px] font-[--font-family-poppins] font-[var(--font-weight-bold)] items-center  `}>
                     <IoMenu className="text-white text-2xl md:hidden" onClick={() => setStatusMenu(!statusMenu)} />

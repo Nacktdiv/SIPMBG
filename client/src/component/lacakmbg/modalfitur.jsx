@@ -56,18 +56,18 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                      onClick={(e) => e.stopPropagation()}>
                     <div className="flex-col">
                         <div className="h-9 flex ">
-                            <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center">
+                            <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                                 <p>Upload Gambar</p>
                                 
                             </div>
                         </div>
                         <div className="bg-hijau-muda-3 flex flex-col gap-[20px] p-5  relative w-125">
-                            <p className="text-xl">Identitas</p>
+                            <p className="text-xl font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Identitas</p>
                             <div id="select-1" className="flex flex-col gap-1">
                                 <div className="flex items-center mb-1 gap-2">
                                     
                                     <IoFingerPrintOutline/>
-                                    <label htmlFor="provinsi" className="text-accent font-semibold">Privasi</label>
+                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Privasi</label>
                                 </div>
                                 
                                 <div className="relative">
@@ -75,7 +75,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                     <select id="anonim" 
                                             value={anonim ? "anonim" : "sinonim"}
                                             onChange={(e) => setanonim(e.target.value === "anonim")}
-                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base">
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]">
                                         <option value="anonim" selected>anonim</option>
                                         <option value="sinonim">sinonim</option>
                                     </select>
@@ -89,7 +89,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 <div id="select-2" className="flex flex-col gap-1">
                                     <div className="flex items-center mb-1 gap-2">
                                         <span className="text-accent font-semibold">👤</span>
-                                        <label htmlFor="nama_input" className="text-accent font-semibold">Nama</label>
+                                        <label htmlFor="nama_input" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Nama</label>
                                     </div>
                                     
                                     <div className="relative">
@@ -112,13 +112,13 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 <div className="flex items-center mb-1 gap-2">
                                     
                                     <IoSchoolOutline/>
-                                    <label htmlFor="provinsi" className="text-accent font-semibold">Sekolah/Pesantren/Posyandu</label>
+                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Sekolah/Pesantren/Posyandu</label>
                                 </div>
                                 
                                 <div className="relative">
                                     
                                     <select
-                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base"
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
                                         value={asalSekolah}
                                         onChange={(e) => setasalSekolah(e.target.value)}
                                     >
@@ -136,7 +136,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                             <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex self-center"
                                     onClick={handleFileSend}>
                                     <div className="py-4 px-8">
-                                        <p className="text-base text-white ">UNGGAH FOTO</p>
+                                        <p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-semibold)]">UNGGAH FOTO</p>
                                     </div>
                                     <IoSearch className=" text-4xl m-auto text-white"></IoSearch>
                             </button>
@@ -144,7 +144,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                     </div>
                     <div className="flex flex-col">
                         <div className="h-9 flex ">
-                            <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center">
+                            <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                                 <p>Preview</p>
                             </div>
                         </div>
