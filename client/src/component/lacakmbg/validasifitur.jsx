@@ -1,5 +1,7 @@
 import { IoSearch, IoHappy } from "react-icons/io5"
 import jatuhFoto from "../../assets/jatuhfoto.png"
+import ImageLoader from "../imageloader";
+import { motion } from "framer-motion";
 
 const DUMMY_DATA = {
   menuScore: 5,
@@ -99,7 +101,11 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                     <p>Validasi Menu</p>
                 </div>
             </div>
-            <div className="flex flex-col p-5 bg-hijau-tua justify-center gap-4">
+            <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="flex flex-col p-5 bg-hijau-tua justify-center gap-4 rounded-b-[20px] rounded-tr-[20px]">
                 <h1 className="text-cream text-xl text-center font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Kesesuaian Menu dan Porsi</h1>
                 <p className="text-cream text-base text-center font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Divalidasi oleh 45 siswa</p>
                 <div className="relative h-8 rounded-full overflow-hidden full"> 
@@ -133,11 +139,11 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                     </div>
                 </div>
                 <div className="flex flex-col p-5 bg-cream rounded-[20px] relative mb-6 ">
-                    <div className="border-hijau-tua border-2 border-dashed mb-1">
+                    <div className="border-hijau-tua border-2 border-dashed mb-4">
                         <div className="h-50 ">
                             <img    src={jatuhFoto} 
                                     alt="" 
-                                    className="h-full w-full object-fit" 
+                                    className="h-full w-full object-cover" 
                                     onClick={() => setmodalPopup(true)} />
                         </div>
                         
@@ -161,10 +167,15 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                             />
                         ))
                     ) : (
-                        <p>Silahkan Anda Lacak MBG</p> 
+                        <ImageLoader 
+                            src="" 
+                            alt="Silahkan Lacak MBG" 
+                            // Kelas untuk styling gambar dan skeleton
+                            className="w-full h-full rounded-lg shadow-lg" 
+                        />
                     )}
                 </div>
-            </div>
+            </motion.div>
         </div>
     )
 }

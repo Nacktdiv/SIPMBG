@@ -1,7 +1,7 @@
 import updateCommentar from "../../api/createcomment";
 import { useState, useEffect} from "react";
 import { IoThumbsUpOutline, IoThumbsDownOutline, IoAlertCircleOutline, IoPersonOutline } from 'react-icons/io5';
-
+import { motion } from "framer-motion";
 const CommentFitur = ({perencanaanMenu}) => {
 
     const [Comment, setComment] = useState("");
@@ -46,16 +46,15 @@ const CommentFitur = ({perencanaanMenu}) => {
             </div>
 
             {/* MAIN CONTAINER */}
-            <div className="bg-hijau-tua flex flex-col gap-5 p-5 h-227 relative rounded-b-2xl">
-
-                
+            <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="bg-hijau-tua flex flex-col gap-5 p-5 h-230 relative rounded-b-[20px] rounded-tr-[20px]">
 
                 {/* COMMENT LIST */}
                 <div className="flex flex-col gap-5 overflow-y-auto">
-
                     {
-
-                        
                     listComment && listComment.map((c, i) => (
                         <div key={i} className="bg-cream p-4 rounded-xl flex flex-col gap-3">
 
@@ -98,13 +97,13 @@ const CommentFitur = ({perencanaanMenu}) => {
                     />
 
                     <button 
-                        className="px-4 py-2 bg-hijau-muda rounded-xl text-sm text-white"
+                        className="px-4 py-2 bg-hijau-muda rounded-xl text-sm text-white transition-100 active:bg-coklat"
                         onClick={handleSubmit}>
                         Kirim
                     </button>
                 </div>
 
-            </div>
+            </motion.div>
         </div>
     );
 };
