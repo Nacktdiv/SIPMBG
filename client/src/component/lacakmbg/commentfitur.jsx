@@ -50,7 +50,7 @@ const CommentFitur = ({perencanaanMenu}) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="bg-hijau-tua flex flex-col gap-5 p-5 h-230 relative rounded-b-[20px] rounded-tr-[20px]">
+            className="bg-hijau-tua flex flex-col gap-5 p-5 h-255 relative rounded-b-[20px] rounded-tr-[20px]">
 
                 {/* COMMENT LIST */}
                 <div className="flex flex-col gap-5 overflow-y-auto">
