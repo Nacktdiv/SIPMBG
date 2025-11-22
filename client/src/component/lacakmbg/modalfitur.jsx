@@ -20,17 +20,17 @@ const ModalFitur = ({onClose, setFileGambar}) => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-        setprevPath(URL.createObjectURL(file));
-        setprevFile(file);
+            setprevPath(URL.createObjectURL(file));
+            setprevFile(file);
         } else {
-        setprevPath(null);
+            setprevPath(null);
         }
     };
 
     const handleFileSend = () => {
         setFileGambar({
             file: prevFile,
-            nama: anonim ? "Random User" : namaUser,
+            nama: anonim ? "Anonim" : namaUser,
             asalSekolah: asalSekolah,
             anonim: anonim
         });
