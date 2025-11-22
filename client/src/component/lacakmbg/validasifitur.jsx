@@ -139,12 +139,41 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                 <div className="flex flex-col p-5 bg-cream rounded-[20px] relative mb-6 ">
                     <div className="border-hijau-tua border-2 border-dashed mb-4">
                         <div className="h-50 ">
-                            <img    src={jatuhFoto} 
+                            {/*<img    src={jatuhFoto} 
                                     alt="" 
                                     className="h-full w-full object-cover" 
-                                    onClick={() => setmodalPopup(true)} />
-                        </div>
-                        
+                                    onClick={() => setmodalPopup(true)} />*/}
+                            <label
+                                htmlFor="hidden-file-upload"
+                                className="cursor-pointer 
+                                bg-brown-100 border-2 border-dashed border-gray-300 rounded-lg 
+                                hover:border-brown-500 hover:bg-brown-50 transition-colors duration-200
+                                object-cover items-center justify-center"
+                                src={jatuhFoto}
+                                onClick={() => setmodalPopup(true)}
+                                >
+                                <div className="text-center pt-10">
+                                    <svg
+                                    className="mx-auto h-12 w-12 text-gray-400"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 48 48"
+                                    aria-hidden="true"
+                                    >
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L40 32"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                    <p className="mt-2 text-sm text-gray-600">
+                                    Klik untuk memilih gambar
+                                    </p>
+                                    <p className="text-xs text-gray-500">PNG, JPG, GIF hingga 10MB</p>
+                                </div>
+                            </label>
+                    </div> 
                     </div>
                     <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 transition duration-300 hover:scale-105 hover:shadow-lg hover:bg-hijau-muda-3"
                             onClick={() => setmodalPopup(true)}>
