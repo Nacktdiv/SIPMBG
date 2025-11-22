@@ -1,17 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 
-
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_KEY;
-
-// Create a single supabase client for interacting with your database
 
 // const supabaseUrl = 'https://rvtdvbdwzalkqinrfguc.supabase.co';
 // const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2dGR2YmR3emFsa3FpbnJmZ3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM2NDExNjEsImV4cCI6MjA3OTIxNzE2MX0.6qD-bU8LMUGCxqFSeN2PtfgVOGILOsCfuEXMgU2C7cQ';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-
+//------------------------------------------------------------------------------------//
 /**
  * Upload a File/Blob to Supabase Storage and return public URL
  * @param {File|Blob} file 
