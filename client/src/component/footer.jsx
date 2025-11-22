@@ -18,6 +18,7 @@ function Footer() {
                         <ul className={`text-cream text-large flex  items-center judtify-center gap-[20px]  `}>
                             <li><Link to="/">Beranda</Link></li>
                             <li><Link to="/lacakmbg">Lacak MBG</Link></li>
+                            <li><a href="#">Kontak</a></li>
                             {/* <li><Link to="/kontak">Kontak</Link></li> */}
                         </ul>
                         <button className="text-cream mt-[20px] md:mt-[0px] px-[4px] py-[4px] block"><p className="text-base ">Masuk Dashboard</p></button>

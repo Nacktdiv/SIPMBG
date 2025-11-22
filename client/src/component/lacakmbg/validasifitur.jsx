@@ -20,7 +20,7 @@ const ValidasiFiturItem = ({user, linkGambar}) => {
     
 
     return (
-        <div className="flex flex-col snap-start ">
+        <div className="flex flex-col snap-start mb-20 ">
             <div className="h-12 flex justify-between -mb-6 z-1 px-5">
                 <div className=" bg-cream-tua rounded-2xl px-6 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
                     <p>{user}</p>
@@ -31,8 +31,8 @@ const ValidasiFiturItem = ({user, linkGambar}) => {
             </div>
             <div className="bg-cream flex flex-col  ">
                 <div className="py-10 px-25  rounded-[20px]">
-                    <div className="h-50 border-dashed border-2">
-                        <img src={linkGambar} alt="" className="object-fit" />
+                    <div className="h-75 border-dashed border-2">
+                        <img src={linkGambar} alt="" className="object-fit h-full w-full" />
                     </div>
                 </div>
                 <div className="flex flex-col -mt-6">
@@ -157,7 +157,7 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                     </button>
                 </div>
                 
-                <div className="overflow-y-scroll h-[464px] flex flex-col gap-5 snap-y snap-mandatory scrollbar-hidden">
+                <div className="overflow-y-scroll h-[564px] flex flex-col gap-5 snap-y snap-mandatory scrollbar-hidden">
                     {Array.isArray(PathGambar) && PathGambar.length > 0 ? (
                         PathGambar.map((e) => (
                             <ValidasiFiturItem 

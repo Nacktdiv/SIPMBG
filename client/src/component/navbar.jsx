@@ -15,6 +15,7 @@ function Navbar () {
                         <ul className={`text-cream text-base flex ${statusMenu ? 'flex-col w-full' : 'flex-row '} items-center judtify-center gap-[20px] `}>
                             <li><Link to="/home">Beranda</Link></li>
                             <li><Link to="/lacakmbg">Lacak MBG</Link></li>
+                            <li><a href="#">Kontak</a></li>
                             {/* <li><Link to="/kontak">Kontak</Link></li>
                             <li><Link to="/testai">Test Inference</Link></li> */}
                         </ul>
