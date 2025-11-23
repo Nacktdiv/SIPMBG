@@ -57,6 +57,7 @@ export const ImageLoader = ({
   useEffect(() => {
     setIsLoaded(false);
     setError(false);
+
     
     if (src) {
         // Menggunakan objek Image browser untuk memuat gambar tanpa memblokir UI

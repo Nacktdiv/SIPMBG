@@ -9,14 +9,22 @@ import {
 
 import { motion } from 'framer-motion';
 import ImageLoader from '../imageloader';
+import ComparisonTable from './comparisontable';
+import { useState } from 'react';
 
-const DetailMenuFitur = ({perencanaanMenu}) => {
+const DetailMenuFitur = ({dataLacak, statusLacak}) => {
     let urlgambar = ""
     let data_menu = null
-    if(perencanaanMenu != null) {
-        urlgambar = perencanaanMenu.gambar_url
-        data_menu = perencanaanMenu.data_menu
+    let dataperbandingan = null
+    if (dataLacak == null){
+    } else if (dataLacak[0] == 1){
+        dataperbandingan = dataLacak
+    } else if (dataLacak[0] == 0) {
+        urlgambar = dataLacak[1].gambar_url
+        data_menu = dataLacak[1].data_menu
     }
+    console.log(statusLacak)
+
 
     return (
         <div id="container-gambar" className=" col-span-4 md:col-span-8 flex-col md:ml-4">
@@ -24,18 +32,18 @@ const DetailMenuFitur = ({perencanaanMenu}) => {
                 <div className="text-cream bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                     <p>Menu MBG Hari Ini</p>
                 </div>
+                <div className="text-cream bg-hijau-muda rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)]">
+                    <p>Data Perbandingan Anggaran</p>
+                </div>
             </div>
+            {statusLacak == false ? (
             <motion.div 
                 className=" bg-hijau-muda-3 flex flex-col  gap-[20px] p-5 relative shadow-2xl rounded-tr-[20px] rounded-b-[20px]"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}>
                 <div className="md:h-[572px] ">
-                    {/* <img
-                        src={urlgambar}
-                        alt="Deskripsi Gambar"
-                        className="w-full h-full object-fit pb-14.5 text-4xl  rounded-[20px] transition duration-300 transition duration-300 hover:scale-105"
-                    /> */}
+                    
                     <ImageLoader 
                         src={urlgambar} 
                         alt="Menu Utama Harian" 
@@ -89,6 +97,19 @@ const DetailMenuFitur = ({perencanaanMenu}) => {
                 </div>
                 
             </motion.div>
+            ) : (
+                <motion.div 
+                className=" bg-hijau-muda flex flex-col  gap-[20px] p-5 relative shadow-2xl rounded-tr-[20px] rounded-b-[20px]"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}>
+                <div className="md:h-[516px] ">
+                    <ComparisonTable data={dataperbandingan}/>
+                </div>
+                {/* Ojo di utak utik iki code seng angel tur jelimet*/}
+            </motion.div>
+            )}
+           
         </div>
     )
 }

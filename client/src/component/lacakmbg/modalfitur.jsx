@@ -105,17 +105,17 @@ const ModalFitur = ({onClose, setFileGambar}) => {
     };
 
     return (
-        <div className="fixed inset-0 z-50  "onClick={onClose} id="modal-backdrop">
-            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm w-full"></div>
+        <div className="fixed inset-0 z-50 "onClick={onClose} id="modal-backdrop">
+            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm w-full  "></div>
 
             <div 
-                className="flex items-center justify-center relative shadow-2xl w-full h-full transform transition-all duration-300 scale-100"
+                className="flex  items-center justify-center relative shadow-2xl w-full h-full transform transition-all duration-300 scale-100"
                 onClick={onClose}
                  // Mencegah klik di sini menutup modal
             >
                 <div 
-                    className="flex gap-5 "
-                    onClick={(e) => e.stopPropagation()}>
+                    className="flex md:flex-row flex-col md:items-center gap-5 h-full overflow-y-auto pt-19 md:pt-0 "
+                    >
                     <div className="flex-col">
                         <div className="h-9 flex ">
                             <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-bold)]">
@@ -123,13 +123,14 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 
                             </div>
                         </div>
-                        <div className="bg-hijau-muda-3 flex flex-col gap-[20px] p-5  relative w-125">
+                        <div className="bg-hijau-muda-3 flex flex-col gap-2 md:gap-5 p-5  relative w-full md:w-125"
+                            onClick={(e) => e.stopPropagation()}>
                             <p className="text-xl font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Identitas</p>
                             <div id="select-1" className="flex flex-col gap-1">
                                 <div className="flex items-center mb-1 gap-2">
                                     
                                     <IoFingerPrintOutline/>
-                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Privasi</label>
+                                    <label htmlFor="provinsi" className=" text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Privasi</label>
                                 </div>
                                 
                                 <div className="relative">
@@ -138,7 +139,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                         id="anonim"
                                         value={anonim ? "anonim" : "sinonim"}
                                         onChange={(e) => setanonim(e.target.value === "anonim")}
-                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none  font-[--font-family-poppins] font-[var(--font-weight-regular)]"
                                     >
                                         <option defaultValue="anonim">anonim</option>
                                         <option value="sinonim">publik</option>
@@ -166,7 +167,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                             value={namaUser}
                                             onChange={(e) => setnamaUser(e.target.value)} 
                                             placeholder="Masukkan Nama Anda"
-                                            className="bg-cream w-full p-2 pr-4 rounded-xl text-base border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                            className="bg-cream w-full p-2 pr-4 rounded-xl  border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                         />
                                         
                                         
@@ -183,7 +184,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 <div className="relative">
                                     
                                     <select
-                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
+                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)]"
                                         value={asalSekolah}
                                         onChange={(e) => setasalSekolah(e.target.value)}
                                     >
@@ -201,14 +202,15 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                             {/* button */}
                             <button className="bg-hijau-muda  w-fit pr-4 rounded-xl flex self-center"
                                     onClick={handleFileSend}>
-                                    <div className="py-4 px-8">
-                                        <p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-semibold)]">UNGGAH FOTO</p>
+                                    <div className="md:py-4 md:px-8 py-2 px-4">
+                                        <p className="text-sm md:text-base text-white font-[--font-family-poppins] font-[var(--font-weight-semibold)]">UNGGAH FOTO</p>
                                     </div>
-                                    <IoSearch className=" text-4xl m-auto text-white"></IoSearch>
+                                    <IoSearch className="text-xl md:text-4xl m-auto text-white"></IoSearch>
                             </button>
                         </div>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col"
+                        onClick={(e) => e.stopPropagation()}>
                         <div className="h-9 flex ">
                             <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                                 <p>Preview</p>
@@ -216,7 +218,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                         </div>
 
                         {/* panel 2 */}
-                        <div className="flex p-5 items-center justify-center bg-hijau-muda-3">
+                        <div className="flex flex-col gap-5 p-5 items-center justify-center bg-hijau-muda-3">
                             {/* Input file yang sebenarnya, disembunyikan secara visual */}
                             <input
                                 id="hidden-file-upload" // ID unik untuk input
@@ -229,17 +231,37 @@ const ModalFitur = ({onClose, setFileGambar}) => {
 
                             <label
                                 htmlFor="hidden-file-upload"
-                                className="relative h-82 w-115 flex items-center justify-center cursor-pointer 
+                                className="relative h-fit md:h-82 w-full md:w-170 flex items-center justify-center cursor-pointer 
                                         bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg 
                                         hover:border-blue-500 hover:bg-gray-50 transition-colors duration-200"
                             >
                                 {prevPath ? (
-                                // Jika ada preview, tampilkan gambar
-                                <img
+                                <div className="flex  gap-5">
+                                <div className="w-full">
+                                    <img
                                     src={prevPath}
                                     alt="Preview Gambar"
-                                    className="h-full w-full object-cover rounded-lg" // Pastikan gambar mengisi area
-                                />
+                                    className="h-25 md:h-full w-full object-cover rounded-lg" // Pastikan gambar mengisi area
+                                    />
+                                    <p>Sebelum bounding box</p>
+                                </div>
+                                
+                                <div className="w-full h-full" >
+                                    <BoundingBoxViewer
+                                    imageFile={prevFile}
+                                    imageUrl={imageAiUrl}
+                                    predictions={predictions || []}
+                                    todayMenu={todayMenu}
+                                    onCanvasReady={(blob) => {
+                                        setImageAiFile(blob);
+                                        setImageAiUrl(URL.createObjectURL(blob));
+                                    }}
+                                    />
+                                    <p>Setelah bounding box</p>
+                                </div>
+
+                                
+                                </div>
                                 ) : (
                                 // Jika tidak ada preview, tampilkan ikon atau teks placeholder
                                 <div className="text-center">
@@ -263,16 +285,31 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                     <p className="text-xs text-gray-500">PNG, JPG, GIF hingga 10MB</p>
                                 </div>
                                 )}
+                                
                             </label>
+                            <div>
+                                    {predictions && (
+                                    (() => {
+                                        const { found, missing, percent } = computeCompleteness(predictions, todayMenu);
+                                        return (
+                                        <div className="w-64 md:w-115" >
+                                            <h3>Hasil Kelengkapan: {found.length}/{todayMenu.length} ({percent}%)</h3>
+                                            <div><strong>Ditemukan:</strong> {found.join(", ") || "—"}</div>
+                                            <div><strong>Missing:</strong> {missing.join(", ") || "—"}</div>
+                                        </div>
+                                        );
+                                    })()
+                                    )}
+                                </div>
                         </div>
                     </div>
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <div className="h-9 flex ">
                             <div className="text-cream text-xl bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center font-[--font-family-poppins] font-[var(--font-weight-bold)]">
                                 <p>Validasi AI</p>
                             </div>
                         </div>
-                        {/* <div>
+                        <div> ini aslinya comment
                             {predictions ? (
                             <>
                                 <h4>Predictions ({predictions.length})</h4>
@@ -281,7 +318,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                                 </pre>
                             </>
                             ) : <p>No prediction yet</p>}
-                        </div> */}
+                        </div>
 
                         <div>
                             <BoundingBoxViewer
@@ -310,7 +347,7 @@ const ModalFitur = ({onClose, setFileGambar}) => {
                             })()
                             )}
                         </div>
-                    </div>
+                    </div> */}
                 </div>            
             </div>
         </div>

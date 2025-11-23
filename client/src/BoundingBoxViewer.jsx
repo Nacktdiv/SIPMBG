@@ -146,8 +146,8 @@ export default function BoundingBoxViewer({
   }, [imageFile, imageUrl, predictions, todayMenu, completenessPercent]);
 
   return (
-    <div style={{ overflow: "auto", maxWidth: "100%" }}>
-      <canvas ref={canvasRef} style={{ maxWidth: "100%", border: "1px solid #ddd" }} />
+    <div styleName="w-full h-full">
+      <canvas ref={canvasRef} className="w-full h-25 md:h-full"/>
     </div>
   );
 }

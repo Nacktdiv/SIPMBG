@@ -3,23 +3,28 @@ import { useState, useEffect} from "react";
 import { IoThumbsUpOutline, IoThumbsDownOutline, IoAlertCircleOutline, IoPersonOutline } from 'react-icons/io5';
 import { motion } from "framer-motion";
 import { showErrorAlert, showSuccesAlert } from "../sweetalert";
-const CommentFitur = ({perencanaanMenu}) => {
+const CommentFitur = ({dataLacak, statusLacak}) => {
 
     const [Comment, setComment] = useState("");
     const [listComment, setlistComment] = useState([])
 
     useEffect(() => {
-        perencanaanMenu && setlistComment(perencanaanMenu.comment)
-        console.log(perencanaanMenu)
-    }, [perencanaanMenu]);
+        if (dataLacak == null){
+            return
+        }else if(dataLacak[0] == 1){
+            setlistComment([])
+        }
+        dataLacak && setlistComment(dataLacak[1].comment)
+        console.log(dataLacak)
+    }, [dataLacak]);
 
     const handleSubmit = async () => {
-        if (!perencanaanMenu){
+        if (!dataLacak){
             showErrorAlert("GAGAL", "Anda Belum Lacak MBG Silahkan Lacak Terlebih Dahulu")
             return;
         }
 
-        const res = await updateCommentar(Comment, perencanaanMenu.id_perencanaan_menu)
+        const res = await updateCommentar(Comment, dataLacak.id_perencanaan_menu)
         setlistComment(res)
         showSuccesAlert("BERHASIL", "Komentar Anda Berhasil Ditambahkan")
     };
@@ -35,6 +40,8 @@ const CommentFitur = ({perencanaanMenu}) => {
 
 
 
+
+
     return (
         <div id="lacak-sppg" className="col-span-4 md:col-span-5 flex-col">
             
@@ -45,18 +52,17 @@ const CommentFitur = ({perencanaanMenu}) => {
                 </div>
             </div>
 
-            {/* MAIN CONTAINER */}
-            <motion.div 
+            {!statusLacak ? (
+                <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="bg-hijau-tua flex flex-col gap-5 p-5 h-255 relative rounded-b-[20px] rounded-tr-[20px]">
+            className="bg-hijau-tua flex flex-col gap-5 p-5 h-71 md:h-255 relative rounded-b-[20px] rounded-tr-[20px]">
 
-                {/* COMMENT LIST */}
                 <div className="flex flex-col gap-5 overflow-y-auto">
                     {
                     listComment && listComment.map((c, i) => (
-                        <div key={i} className="bg-cream p-4 rounded-xl flex flex-col gap-3">
+                        <div key={i} className="bg-cream p-4 rounded-xl flex flex-col gap-3 break-words">
 
                             {/* Top: avatar + name */}
                             <div className="flex items-center gap-3">
@@ -87,7 +93,6 @@ const CommentFitur = ({perencanaanMenu}) => {
 
                 </div>
 
-                {/* INPUT */}
                 <div className="flex flex-wrap bg-cream rounded-xl px-4 py-2 gap-2">
                     <input
                         placeholder="Tulis comment atau umpan balik disini..."
@@ -104,6 +109,16 @@ const CommentFitur = ({perencanaanMenu}) => {
                 </div>
 
             </motion.div>
+            ) : (
+                <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="bg-hijau-tua flex flex-col gap-5 p-5  md:h-255 relative rounded-b-[20px] rounded-tr-[20px]">
+
+            </motion.div>
+            )}
+            
         </div>
     );
 };

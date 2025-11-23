@@ -5,10 +5,13 @@ import { IoSearch,
 } from "react-icons/io5"
 import { motion } from 'framer-motion';
 import { showErrorAlert, showSuccesAlert } from "../sweetalert";
+import { useState } from "react";
 
 import getLacakMbg from "../../api/getLacakMbg";
+import getLacakAnggaran from "../../api/getLacakAnggaran";
 
-const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperencanaanMenu}) => {
+const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setdataLacak, setstatusLacak, statusLacak}) => {
+    
 
     const  handleLacakMenu = async () => {
         // 1. Ambil nilai dari semua elemen menggunakan ID
@@ -32,7 +35,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
             let res = await getLacakMbg(dataForm)
             if(res == null){
                 setPathGambar(null)
-                setperencanaanMenu(null)
+                setdataLacak(null)
                 setstatusValidasi(false)
                 showErrorAlert("GAGAL", "Semua Data Tidak Ditemukan")
                 return;
@@ -47,7 +50,7 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
                 return;
             }
             setPathGambar(resBukti)
-            setperencanaanMenu(resRencana)
+            setdataLacak([0, resRencana])
             setstatusValidasi(true)
             showSuccesAlert("BERHASIL", "Data Bukti Menu dan Data Perencanaan Menu Ditemukan")
         } catch (e) {
@@ -56,161 +59,311 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setperen
         }
     };
 
+    const  handleLacakAnggaran = async () => {
+        // 1. Ambil nilai dari semua elemen menggunakan ID
+        const provinsi = document.getElementById('select_provinsi_a').value;
+        const kota = document.getElementById('select_kota_a').value;
+        const lokasiSppg = document.getElementById('select_lokasi_sppg_a').value;
+        const tanggalDistribusi = document.getElementById('tanggal_distribusi_a').value;
+
+        // 2. Kumpulkan data dalam satu objek
+        const dataForm = {
+            provinsi: provinsi,
+            kota: kota,
+            lokasiSppg: lokasiSppg,
+            tanggalDistribusi : tanggalDistribusi
+        };
+        // console.log(dataForm)
+        try {
+            const res = await getLacakAnggaran(dataForm)
+            setdataLacak([1, res])
+        } catch (e) {
+            console.error("Error saat getLacakAnggaran", e)
+        }
+    };
+
     return (
         <div id="lacak-sppg" className="col-span-4 mb-10 md:mb-0 md:col-span-4 flex-col">
             <div className="h-9 flex  ">
-                <div className="text-cream bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)] shadow-md">
+                <div className="text-cream bg-hijau-muda-3 rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)] shadow-md"
+                    onClick={() => setstatusLacak(false)}>
                     <p>Lacak Menu</p>
                 </div>
-                {/* <div className="text-cream bg-hijau-muda rounded-t-2xl px-4 py-2 flex items-center ">
+                <div className="text-cream bg-hijau-muda rounded-t-2xl px-4 py-2 flex items-center text-xl font-[--font-family-poppins] font-[var(--font-weight-bold)] shadow-md"
+                    onClick={() => setstatusLacak(true)}>
                     <p className="">Lacak Anggaran</p>
-                </div> */}
+                </div>
             </div>
-            <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="bg-hijau-muda-3 flex flex-col gap-[20px] p-5  relative shadow-md rounded-b-[20px] rounded-tr-[20px] ">
-                    <div id="lokasi" className="z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg ">
-                    
-                        <h1 className="text-2xl font-bold text-center mb-6 font-[--font-family-poppins] font-[var(--font-weight-bold)]">
-                            Lokasi Dapur SPPG
-                        </h1>
+            {!statusLacak ? (
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    className="bg-hijau-muda-3 flex flex-col gap-[20px] p-5  relative shadow-md rounded-b-[20px] rounded-tr-[20px] ">
+                        <div id="lokasi" className="z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg ">
+                        
+                            <h1 className="text-2xl font-bold text-center mb-6 font-[--font-family-poppins] font-[var(--font-weight-bold)]">
+                                Lokasi Dapur SPPG
+                            </h1>
 
-                        <div className="flex flex-col gap-1">
-                            <div className="flex items-center mb-1">
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoLocationOutline/>
+                                    <label htmlFor="provinsi" className=" font-[--font-family-poppins] font-[var(--font-weight-semibold)] ">Provinsi</label>
+                                </div>
                                 
-                                <IoLocationOutline/>
-                                <label htmlFor="provinsi" className=" font-[--font-family-poppins] font-[var(--font-weight-semibold)] ">Provinsi</label>
+                                <div className="relative">
+                                    
+                                    <select id="select_provinsi" 
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
+                                            defaultValue="- Pilih Provinsi -">
+                                        <option value="" >- Pilih Provinsi -</option>
+                                        <option value="Jawa Timur" >Jawa Timur</option>
+                                        {/* <option value="Jawa Barat">Jawa Barat</option>
+                                        <option value="Jawa Tengah">Jawa Tengah</option> */}
+                                    </select>
+                                    
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <IoChevronDownOutline/>
+                                    </div>
+                                </div>
                             </div>
                             
-                            <div className="relative">
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoLocationOutline/>
+                                    <label htmlFor="provinsi" className="font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Kota/Kabupaten</label>
+                                </div>
                                 
-                                <select id="select_provinsi" 
-                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
-                                        defaultValue="Jawa Timur">
-                                    <option value="Jawa Timur" >- Pilih Provinsi -</option>
-                                    <option value="Jawa Timur" >Jawa Timur</option>
-                                    {/* <option value="Jawa Barat">Jawa Barat</option>
-                                    <option value="Jawa Tengah">Jawa Tengah</option> */}
-                                </select>
+                                <div className="relative">
+                                    
+                                    <select id="select_kota" 
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
+                                            defaultValue="- Pilih Kota -">
+                                        <option value="" >- Pilih Kota -</option>
+                                        <option value="Kota Kediri" >Kota Kediri</option>
+                                        <option value="Kota Batu">Kota Malang</option>
+                                        <option value="Kota Kendari">Kota Surabaya</option>
+                                    </select>
+                                    
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <IoChevronDownOutline/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="penerima" className=" z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
+                        
+                            <h1 className="text-2xl font-bold text-center mb-6 text-accent">
+                                Lokasi Penerima MBG
+                            </h1>
+
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoLocationOutline/>
+                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lokasi SPPG</label>
+                                </div>
                                 
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <IoChevronDownOutline/>
+                                <div className="relative">
+                                    
+                                    <select id="select_lokasi_sppg" 
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)] text-base"
+                                            defaultValue="- Pilih Lokasi SPPG -">
+                                        <option value="" >- Pilih Lokasi SPPG -</option>
+                                        <option value="Burengan" >Burengan</option>
+                                        <option value="Banjarmlati">Banjarmlati</option>
+                                        <option value="Pulosari">Pulosari</option>
+                                    </select>
+                                    
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <IoChevronDownOutline/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoLocationOutline/>
+                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)] font-semibold">Sekolah/Pesantren/Posyandu</label>
+                                </div>
+                                
+                                <div className="relative">
+                                    
+                                    <select id="select_penerima" 
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)] text-base"
+                                            defaultValue="- Pilih Nama Sekolah -">
+                                        <option value="" >- Pilih Nama Sekolah -</option>
+                                        <option value="MAN 2 Kota Kediri" >MAN 2 Kota Kediri</option>
+                                        <option value="Posyandu Burengan">Posyandu Burengan</option>
+                                        <option value="Ponpes Lirboyo">Ponpes Lirboyo</option>
+                                    </select>
+                                    
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <IoChevronDownOutline/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="waktu" className=" z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 mb-8 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
+                        
+                            <h1 className="text-2xl font-bold text-center mb-6 text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
+                                Waktu Distribusi MBG
+                            </h1>
+
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoAlarmOutline />
+                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Tanggal Distribusi</label>
+                                </div>
+                                
+                                <div className="relative">
+                                <input 
+                                    id="tanggal_distribusi" 
+                                    name="tanggal_distribusi"
+                                    type="date" 
+                                    className="bg-cream dropdown-style w-full p-2 pr-10 round" 
+                                />
+                                </div>
+                            </div>
+                        </div>
+                        <button className="bg-hijau-tua  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 shadow-md transition hover:duration-300 hover:scale-105 hover:shadow-lg hover:bg-hijau-tua-2 active:duration-0 active:bg-coklat"
+                                onClick={handleLacakMenu}>
+                            <div className="py-4 px-8 ">
+                                <p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-bold)] w-full ">LACAK MENU</p>
+                            </div>
+                            <IoSearch className=" text-4xl m-auto text-white"></IoSearch>
+                        </button>
+                </motion.div>
+            ) : (
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    className="bg-hijau-muda flex flex-col gap-[20px] p-5  relative shadow-md rounded-b-[20px] rounded-tr-[20px] ">
+                        <div id="lokasi" className="z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg ">
+                        
+                            <h1 className="text-2xl font-bold text-center mb-6 font-[--font-family-poppins] font-[var(--font-weight-bold)]">
+                                Lokasi Dapur SPPG
+                            </h1>
+
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoLocationOutline/>
+                                    <label htmlFor="provinsi" className=" font-[--font-family-poppins] font-[var(--font-weight-semibold)] ">Provinsi</label>
+                                </div>
+                                
+                                <div className="relative">
+                                    
+                                    <select id="select_provinsi_a" 
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
+                                            defaultValue="- Pilih Provinsi -">
+                                        <option value="" >- Pilih Provinsi -</option>
+                                        <option value="Jawa Timur" >Jawa Timur</option>
+                                        {/* <option value="Jawa Barat">Jawa Barat</option>
+                                        <option value="Jawa Tengah">Jawa Tengah</option> */}
+                                    </select>
+                                    
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <IoChevronDownOutline/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoLocationOutline/>
+                                    <label htmlFor="provinsi" className="font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Kota/Kabupaten</label>
+                                </div>
+                                
+                                <div className="relative">
+                                    
+                                    <select id="select_kota_a" 
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
+                                            defaultValue="- Pilih Kota -">
+                                        <option value="" >- Pilih Kota -</option>
+                                        <option value="Kota Kediri" >Kota Kediri</option>
+                                        <option value="Kota Batu">Kota Malang</option>
+                                        <option value="Kota Kendari">Kota Surabaya</option>
+                                    </select>
+                                    
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <IoChevronDownOutline/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="penerima" className=" z-10 bg-cream-tua w-full mb-8  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
+                        
+                            <h1 className="text-2xl font-bold text-center mb-6 text-accent">
+                                Lokasi Penerima MBG
+                            </h1>
+
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoLocationOutline/>
+                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lokasi SPPG</label>
+                                </div>
+                                
+                                <div className="relative">
+                                    
+                                    <select id="select_lokasi_sppg_a" 
+                                            className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)] text-base"
+                                            defaultValue="- Pilih Lokasi SPPG -">
+                                        <option value="" >- Pilih Lokasi SPPG -</option>
+                                        <option value="Burengan" >Burengan</option>
+                                        <option value="Banjarmlati">Banjarmlati</option>
+                                        <option value="Pulosari">Pulosari</option>
+                                    </select>
+                                    
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <IoChevronDownOutline/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div className="flex flex-col gap-1">
-                            <div className="flex items-center mb-1">
-                                
-                                <IoLocationOutline/>
-                                <label htmlFor="provinsi" className="font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Kota/Kabupaten</label>
-                            </div>
-                            
-                            <div className="relative">
-                                
-                                <select id="select_kota" 
-                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none text-base font-[--font-family-poppins] font-[var(--font-weight-regular)]"
-                                        defaultValue="Kota Kediri">
-                                    <option value="Kota Kediri" >- Pilih Kota -</option>
-                                    <option value="Kota Kediri" >Kota Kediri</option>
-                                    <option value="Kota Batu">Kota Malang</option>
-                                    <option value="Kota Kendari">Kota Surabaya</option>
-                                </select>
-                                
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <IoChevronDownOutline/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="penerima" className=" z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
-                    
-                        <h1 className="text-2xl font-bold text-center mb-6 text-accent">
-                            Lokasi Penerima MBG
-                        </h1>
-
-                        <div className="flex flex-col gap-1">
-                            <div className="flex items-center mb-1">
-                                
-                                <IoLocationOutline/>
-                                <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Lokasi SPPG</label>
-                            </div>
-                            
-                            <div className="relative">
-                                
-                                <select id="select_lokasi_sppg" 
-                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)] text-base"
-                                        defaultValue="Burengan">
-                                    <option value="Burengan" >- Pilih Lokasi SPPG -</option>
-                                    <option value="Burengan" >Burengan</option>
-                                    <option value="Banjarmlati">Banjarmlati</option>
-                                    <option value="Pulosari">Pulosari</option>
-                                </select>
-                                
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <IoChevronDownOutline/>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="waktu" className=" z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 mb-8 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
                         
-                        <div className="flex flex-col gap-1">
-                            <div className="flex items-center mb-1">
+                            <h1 className="text-2xl font-bold text-center mb-6 text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
+                                Bulan Input Anggaran
+                            </h1>
+
+                            <div className="flex flex-col gap-1">
+                                <div className="flex items-center mb-1">
+                                    
+                                    <IoAlarmOutline />
+                                    <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Tanggal Distribusi</label>
+                                </div>
                                 
-                                <IoLocationOutline/>
-                                <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)] font-semibold">Sekolah/Pesantren/Posyandu</label>
-                            </div>
-                            
-                            <div className="relative">
-                                
-                                <select id="select_penerima" 
-                                        className="bg-cream dropdown-style w-full p-2 pr-10 rounded-xl appearance-none font-[--font-family-poppins] font-[var(--font-weight-regular)] text-base"
-                                        defaultValue="MAN 2 Kota Kediri">
-                                    <option value="MAN 2 Kota Kediri" >- Pilih Nama Sekolah -</option>
-                                    <option value="MAN 2 Kota Kediri" >MAN 2 Kota Kediri</option>
-                                    <option value="Posyandu Burengan">Posyandu Burengan</option>
-                                    <option value="Ponpes Lirboyo">Ponpes Lirboyo</option>
-                                </select>
-                                
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <IoChevronDownOutline/>
+                                <div className="relative">
+                                <input 
+                                    id="tanggal_distribusi_a" 
+                                    name="tanggal_distribusi"
+                                    type="date" 
+                                    className="bg-cream dropdown-style w-full p-2 pr-10 round" 
+                                />
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="waktu" className=" z-10 bg-cream-tua w-full  rounded-xl shadow-2xl flex flex-col gap-4 p-2 mb-8 transition duration-300 hover:scale-105 hover:translate-x-10 hover:shadow-lg">
-                    
-                        <h1 className="text-2xl font-bold text-center mb-6 text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">
-                            Waktu Distribusi MBG
-                        </h1>
-
-                        <div className="flex flex-col gap-1">
-                            <div className="flex items-center mb-1">
-                                
-                                <IoAlarmOutline />
-                                <label htmlFor="provinsi" className="text-accent font-[--font-family-poppins] font-[var(--font-weight-semibold)]">Tanggal Distribusi</label>
+                        <button className="bg-hijau-tua  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 shadow-md transition hover:duration-300 hover:scale-105 hover:shadow-lg hover:bg-hijau-tua-2 active:duration-0 active:bg-coklat"
+                                onClick={handleLacakAnggaran}>
+                            <div className="py-4 px-8 ">
+                                <p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-bold)] w-full ">LACAK MENU</p>
                             </div>
-                            
-                            <div className="relative">
-                            <input 
-                                id="tanggal_distribusi" 
-                                name="tanggal_distribusi"
-                                type="date" 
-                                className="bg-cream dropdown-style w-full p-2 pr-10 round" 
-                            />
-                            </div>
-                        </div>
-                    </div>
-                    <button className="bg-hijau-tua  w-fit pr-4 rounded-xl flex absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 shadow-md transition hover:duration-300 hover:scale-105 hover:shadow-lg hover:bg-hijau-tua-2 active:duration-0 active:bg-coklat"
-                            onClick={handleLacakMenu}>
-                        <div className="py-4 px-8 ">
-                            <p className="text-base text-white font-[--font-family-poppins] font-[var(--font-weight-bold)] w-full ">LACAK MENU</p>
-                        </div>
-                        <IoSearch className=" text-4xl m-auto text-white"></IoSearch>
-                    </button>
-            </motion.div>
+                            <IoSearch className=" text-4xl m-auto text-white"></IoSearch>
+                        </button>
+                </motion.div>
+            )}
         </div>
     )
 }

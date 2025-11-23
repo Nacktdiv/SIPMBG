@@ -10,6 +10,9 @@ import CommentFitur from "./component/lacakmbg/commentfitur";
 import DetailMenuFitur from "./component/lacakmbg/detailmenufitur"
 import { showSuccesAlert, showErrorAlert } from "./component/sweetalert";
 
+//tsrt
+// import ComparisonTable from "./component/lacakmbg/comparisontable";
+
 //LOGIC IMPORT
 import createGambarDB from "./api/creategambardb";
 import getLacakMbg from "./api/getLacakMbg";
@@ -20,7 +23,10 @@ function LacakMbg() {
     const [PathGambar, setPathGambar] = useState("")
     const [dataValidasi, setdataValidasi] = useState(null)
     const [statusValidasi, setstatusValidasi] = useState(false)
-    const [perencanaanMenu, setperencanaanMenu] = useState(null)
+    const [statusLacak, setstatusLacak] = useState(false)
+    const [dataLacak, setdataLacak] = useState(null)
+
+    
 
     const handleUploadAndInsert = async () => {
         try {
@@ -46,17 +52,19 @@ function LacakMbg() {
     }, [FileGambar]);
 
     
+    
     return (
         <div className="bg-cream">
             <Navbar />
             <div id="section-1" className="grid-container pt-24">
-                <LacakFitur setPathGambar={setPathGambar} setdataValidasi={setdataValidasi} setstatusValidasi={setstatusValidasi} setperencanaanMenu={setperencanaanMenu}/>
-                <DetailMenuFitur perencanaanMenu={perencanaanMenu} />
+                <LacakFitur setPathGambar={setPathGambar} setdataValidasi={setdataValidasi} setstatusValidasi={setstatusValidasi} setdataLacak={setdataLacak} setstatusLacak={setstatusLacak} statusLacak={statusLacak}/>
+                <DetailMenuFitur dataLacak={dataLacak} statusLacak={statusLacak}  />
             </div>
             <div className="md:h-25 h-10"></div>
             <div id="section-2" className="grid-container">
-                <ValidasiFitur modalPopup={modalPopup} setmodalPopup={setmodalPopup} PathGambar={PathGambar} />
-                <CommentFitur perencanaanMenu={perencanaanMenu} />
+                <ValidasiFitur modalPopup={modalPopup} setmodalPopup={setmodalPopup} PathGambar={PathGambar} statusLacak={statusLacak}/>
+                <CommentFitur dataLacak={dataLacak} statusLacak={statusLacak}/>
+                {/* <ComparisonTable/> */}
             </div>
             <Footer className=''/>
             {modalPopup && <ModalFitur onClose={() => setmodalPopup(false)} setFileGambar={setFileGambar} />}

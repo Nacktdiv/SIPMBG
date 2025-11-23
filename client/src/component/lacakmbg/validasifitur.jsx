@@ -2,6 +2,7 @@ import { IoSearch, IoHappy } from "react-icons/io5"
 import jatuhFoto from "../../assets/jatuhfoto.png"
 import ImageLoader from "../imageloader";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const DUMMY_DATA = {
   menuScore: 5,
@@ -88,9 +89,10 @@ const ValidasiFiturItem = ({user, linkGambar}) => {
     )
 }
 
-const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
+const ValidasiFitur = ({setmodalPopup, PathGambar, statusLacak }) => {
 
     const widthPercentage = 66;
+    console.log(statusLacak)
 
     return (
         <div id="validasi-menu" className="col-span-4 md:col-span-7  flex flex-col md:mr-4">
@@ -99,7 +101,8 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                     <p>Validasi Menu</p>
                 </div>
             </div>
-            <motion.div 
+            {!statusLacak ? (
+                <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
@@ -188,8 +191,8 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                     {Array.isArray(PathGambar) && PathGambar.length > 0 ? (
                         PathGambar.map((e, i) => (
                             <ValidasiFiturItem 
-                                // key={e.nama || e.gambar_url}
-                                key={`${e.nama || "user"}-${i}`}
+                                key={e.nama || e.gambar_url || i}
+                                // key={`${e.nama || "user"}-${i}`}
                                 user={e.nama} 
                                 linkGambar={e.gambar_url} 
                             />
@@ -204,6 +207,14 @@ const ValidasiFitur = ({setmodalPopup, PathGambar,  }) => {
                     )}
                 </div>
             </motion.div>
+            ) : (
+                <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="flex flex-col p-5 bg-hijau-tua justify-center gap-4 rounded-b-[20px] rounded-tr-[20px]"></motion.div>
+            )}
+            
         </div>
     )
 }
