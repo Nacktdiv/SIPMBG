@@ -26,14 +26,12 @@ const CommentFitur = ({dataLacak, statusLacak}) => {
 
         const res = await updateCommentar(Comment, dataLacak[1].id_perencanaan_menu)
         setlistComment(res)
-        console.log(listComment)
         showSuccesAlert("BERHASIL", "Komentar Anda Berhasil Ditambahkan")
     };
 
     const handleComment = (event) => {
 
         const nilaiBaru = event.target.value;
-        console.log(nilaiBaru)
         
         setComment(nilaiBaru); 
 
