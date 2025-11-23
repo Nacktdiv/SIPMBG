@@ -23,7 +23,6 @@ const DetailMenuFitur = ({dataLacak, statusLacak}) => {
         urlgambar = dataLacak[1].gambar_url
         data_menu = dataLacak[1].data_menu
     }
-    console.log(statusLacak)
 
 
     return (

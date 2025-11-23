@@ -92,7 +92,6 @@ const ValidasiFiturItem = ({user, linkGambar}) => {
 const ValidasiFitur = ({setmodalPopup, PathGambar, statusLacak }) => {
 
     const widthPercentage = 66;
-    console.log(statusLacak)
 
     return (
         <div id="validasi-menu" className="col-span-4 md:col-span-7  flex flex-col md:mr-4">
@@ -212,7 +211,7 @@ const ValidasiFitur = ({setmodalPopup, PathGambar, statusLacak }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="flex flex-col p-5 bg-hijau-tua justify-center gap-4 rounded-b-[20px] rounded-tr-[20px]"></motion.div>
+            className="flex flex-col h-full p-5 bg-hijau-tua justify-center gap-4 rounded-b-[20px] rounded-tr-[20px]"></motion.div>
             )}
             
         </div>

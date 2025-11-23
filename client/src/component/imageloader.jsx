@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { IoImageOutline } from 'react-icons/io5';
 
 // --- Ikon SVG Placeholder (Pengganti IoImageOutline) ---
 // Digunakan saat gambar belum dimuat. Diganti dengan SVG inline agar tidak ada error.
 const PlaceholderIcon = ({ className = "w-10 h-10 text-gray-400" }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    className={className} 
-    fill="none" 
-    viewBox="0 0 24 24" 
-    stroke="currentColor" 
-    strokeWidth={2}
-  >
-    <path 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-12 5h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z" 
-    />
-  </svg>
+  <IoImageOutline/>
 );
 
 
@@ -29,7 +17,7 @@ const SkeletonImage = ({ containerClasses, iconClasses }) => {
       <div className="animate-pulse flex h-full items-center justify-center bg-gray-200">
         <PlaceholderIcon className={iconClasses} />
         <p className="mt-2 text-sm text-gray-600">
-          <pre> Silakan Pilih Lokasi dan Waktu untuk Melihat Menu Hari Ini</pre>
+          Silakan Pilih Lokasi dan Waktu untuk Melihat Menu Hari Ini
         </p>
       </div>
     </div>
