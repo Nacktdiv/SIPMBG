@@ -190,8 +190,8 @@ const ValidasiFitur = ({setmodalPopup, PathGambar, statusLacak }) => {
                     {Array.isArray(PathGambar) && PathGambar.length > 0 ? (
                         PathGambar.map((e, i) => (
                             <ValidasiFiturItem 
-                                key={e.nama || e.gambar_url || i}
-                                // key={`${e.nama || "user"}-${i}`}
+                                // key={e.nama || e.gambar_url || i}
+                                key={`${e.nama || "user"}-${i}`}
                                 user={e.nama} 
                                 linkGambar={e.gambar_url} 
                             />
