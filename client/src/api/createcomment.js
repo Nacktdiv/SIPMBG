@@ -51,7 +51,7 @@ const updateCommentar = async (komentar, id_menu) => {
         return updatedData.comment;
 
     } catch (error) {
-        console.error("Terjadi error tak terduga dalam komentar:", error);
+    console.error("Terjadi error tak terduga dalam komentar:", error);
         return null;
     }
 };

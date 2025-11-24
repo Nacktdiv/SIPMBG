@@ -9,6 +9,7 @@ import ValidasiFitur from "./component/lacakmbg/validasifitur";
 import CommentFitur from "./component/lacakmbg/commentfitur";
 import DetailMenuFitur from "./component/lacakmbg/detailmenufitur"
 import { showSuccesAlert, showErrorAlert } from "./component/sweetalert";
+import KepuasanFitur from "./component/lacakmbg/kepuasanfitur";
 
 //tsrt
 // import ComparisonTable from "./component/lacakmbg/comparisontable";
@@ -25,6 +26,7 @@ function LacakMbg() {
     const [statusValidasi, setstatusValidasi] = useState(false)
     const [statusLacak, setstatusLacak] = useState(false)
     const [dataLacak, setdataLacak] = useState(null)
+    const [kepuasanLacak, setkepuasanLacak] = useState(null)
 
     
 
@@ -65,6 +67,9 @@ function LacakMbg() {
                 <ValidasiFitur modalPopup={modalPopup} setmodalPopup={setmodalPopup} PathGambar={PathGambar} statusLacak={statusLacak}/>
                 <CommentFitur dataLacak={dataLacak} statusLacak={statusLacak}/>
                 {/* <ComparisonTable/> */}
+            </div>
+            <div id="section-3" className="grid-container">
+                <KepuasanFitur kepuasanLacak={kepuasanLacak}/>
             </div>
             <Footer className=''/>
             {modalPopup && <ModalFitur onClose={() => setmodalPopup(false)} setFileGambar={setFileGambar} />}

@@ -38,7 +38,7 @@ async function createGambarsppg(obj) {
         data_menu : obj.data_menu,
         gambar_url: urlGambar,
         id_sppg: idTarget, 
-        created_at : currentTimeStamp
+            created_at : currentTimeStamp
     };
 
     //3. upload ke collection upload_bukti_menu

@@ -33,7 +33,7 @@ const CommentFitur = ({dataLacak, statusLacak}) => {
 
         const nilaiBaru = event.target.value;
         
-        setComment(nilaiBaru); 
+        setComment(nilaiBaru);  
 
     };
 
