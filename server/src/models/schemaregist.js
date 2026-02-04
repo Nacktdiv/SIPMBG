@@ -1,0 +1,3 @@
+const registSchema = () => {
+    return{}
+}

@@ -1,43 +1,76 @@
+const express = require('express')
+const app = express()
+const bodyparser = require('body-parser')
+const env = require('dotenv')
+const jwt = require('jsonwebtoken')
 
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./src/config/db');
-const cors = require('cors');
+const db = require('./src/config/mysql')
+const getData = require('./src/routes/rootGET')
+const ambilDataQueries = require("./src/routes/searchGET")
+const tambahData = require('./src/routes/insertPOST')
+const ubahData = require('./src/routes/updatePUT')
+const hapusData = require('./src/routes/deleteDELETE')
 
-// IMPORT ROUTES
+const authMiddleware = require('./src/routes/auth')
 
-// END ROUTES
+env.config()
 
-dotenv.config();
+app.use(bodyparser.json())
 
-connectDB();
+app.post('/login', (req, res) => {
+  const jwtSecret = process.env.JWT_SECRET
+  const {username, password} = req.body
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+  db.query(`SELECT * FROM regist WHERE username='${username}' AND password='${password}'`, (err,data) => {
+    if (err) {
+      res.status(400).json({err})
+    } else if (data.length === 0) {
+      res.status(200).json({message:"DATA TIDAK DITEMUKAN"})
+    } else {
+      const payload = {
+        id : data[0].id,
+        username : data[0].username,
+        role : data[0].status
+      }
+      const token = jwt.sign(payload, jwtSecret, {expiresIn : '1h'})
+      res.status(200).json(token)
+    }
+  })
+})
 
-// START
+app.get('/', authMiddleware, (req, res) => {
+  db.query('SELECT * FROM regist', (err, data) => {
+    if (err) {
+      console.log(err)
+      getData(res, 400, data, "GAGAL AMBIL DATA DARI DATABASE" )
+    } else { 
+      getData(res, 200, data, "BERHASIL AMBIL DATA DARI DATABASE")
+      console.log(data)
+    }
+  })
+})
 
-// MDWARE
+app.get('/search', (req, res) => {
+  let query = req.query
+  ambilDataQueries(res, query)
+})
 
-app.use(express.json()); 
+app.post('/upload', (req, res) => {
+  let body = req.body 
+  tambahData(res, body)
+})
 
-const corsOptions = {
-  origin: 'http://localhost:5173', // Ganti dengan URL frontend Anda
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-};
-app.use(cors(corsOptions));
+app.put('/update/:usernameBefore/:username/:password', (req, res) => {
+  let params = req.params
+  console.log(params)
+  ubahData(res, params)
+})
 
-// END MDWARE
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Server is running successfully!' });
-});
+app.delete('/delete/:username', (req,res) => {
+  const params = req.params
+  hapusData(res, params)
+})
 
-app.use('/uploads', express.static('uploads'));
-
-// END
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`Access: http://localhost:${PORT}`);
-});
+app.listen(process.env.PORT, () => {
+  console.log(`Server berjalan di http://localhost:${process.env.PORT}`)
+})

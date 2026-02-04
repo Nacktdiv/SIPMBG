@@ -12,13 +12,14 @@
   "packageManager": "pnpm@10.22.0",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "jest": "^30.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.4",
     "multer": "^2.0.2",
+    "mysql": "^2.18.1",
     "node-appwrite": "^20.3.0"
   },
   "devDependencies": {

@@ -9,6 +9,7 @@ import { useState } from "react";
 
 import getLacakMbg from "../../api/getLacakMbg";
 import getLacakAnggaran from "../../api/getLacakAnggaran";
+// import getLacakKepuasan from "../../api/getkepuasan";
 
 const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setdataLacak, setstatusLacak, statusLacak}) => {
     
@@ -81,6 +82,29 @@ const LacakFitur = ({setPathGambar, setdataValidasi, setstatusValidasi, setdataL
             console.error("Error saat getLacakAnggaran", e)
         }
     };
+
+    // const  handleLacakKepuasan= async () => {
+    //     // 1. Ambil nilai dari semua elemen menggunakan ID
+    //     const provinsi = document.getElementById('select_provinsi_a').value;
+    //     const kota = document.getElementById('select_kota_a').value;
+    //     const lokasiSppg = document.getElementById('select_lokasi_sppg_a').value;
+    //     const tanggalDistribusi = document.getElementById('tanggal_distribusi_a').value;
+
+    //     // 2. Kumpulkan data dalam satu objek
+    //     const dataForm = {
+    //         provinsi: provinsi,
+    //         kota: kota,
+    //         lokasiSppg: lokasiSppg,
+    //         tanggalDistribusi : tanggalDistribusi
+    //     };
+    //     // console.log(dataForm)
+    //     try {
+    //         const res = await getLacakKepuasan(dataForm)
+            
+    //     } catch (e) {
+    //         console.error("Error saat getLacakAnggaran", e)
+    //     }
+    // };
 
     return (
         <div id="lacak-sppg" className="col-span-4 mb-10 md:mb-0 md:col-span-4 flex-col">
